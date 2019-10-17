@@ -5,6 +5,7 @@
                 app
                 color="blue darken-3"
                 dark
+                height="60"
         >
             <v-toolbar-title
                     style="width: 300px"
@@ -12,7 +13,7 @@
             >
                 <span>A19-Team-28</span>
             </v-toolbar-title>
-            <v-list  color="blue darken-3" dark>
+            <v-list  color="blue darken-3" dark flat max-height="59">
                 <v-list-item
                         link
                 >
@@ -51,7 +52,7 @@
 
                 <v-list>
                     <v-list-item
-                            v-for="(item, index) in items"
+                            v-for="(item, index) in menu"
                             :key="index"
                             @click="a"
                     >
@@ -71,7 +72,7 @@
         data: () => ({
             dialog: false,
             drawer: null,
-            items: [
+            menu: [
                 { title: 'Settings' },
                 { title: 'Profile' },
                 { title: 'Logout' },
