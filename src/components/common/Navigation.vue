@@ -8,16 +8,16 @@
                 height="60"
         >
             <v-toolbar-title
-                    style="width: 300px"
+                    style="width: 200px; cursor: pointer"
                     class="ml-0 pl-4"
             >
-                <span>A19-Team-28</span>
+                <span @click="goHome">A19-Team-28</span>
             </v-toolbar-title>
             <v-list  color="blue darken-3" dark flat max-height="59">
                 <v-list-item
                         link
                 >
-                   <v-list-item-title>Playlists</v-list-item-title>
+                   <v-list-item-title @click="navigateToPlaylists">Playlists</v-list-item-title>
 
                 </v-list-item>
             </v-list>
@@ -28,7 +28,7 @@
                     hide-details
                     prepend-inner-icon="search"
                     label="Search for artists or playlists"
-                    class="hidden-sm-and-down"
+                    class="hidden-xs-and-down"
             ></v-text-field>
             <v-spacer></v-spacer>
             <v-menu open-on-hover bottom offset-y>
@@ -52,9 +52,9 @@
 
                 <v-list>
                     <v-list-item
+                            style="cursor: pointer"
                             v-for="(item, index) in menu"
                             :key="index"
-                            @click="a"
                     >
                         <v-list-item-title>{{ item.title }}</v-list-item-title>
                     </v-list-item>
@@ -78,6 +78,14 @@
                 { title: 'Logout' },
             ],
         }),
+        methods: {
+            navigateToPlaylists(){
+                this.$router.push('/playlists')
+            },
+            goHome(){
+                this.$router.push('/')
+            }
+        }
     }
 </script>
 <style scoped>
