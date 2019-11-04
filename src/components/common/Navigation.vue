@@ -1,4 +1,112 @@
 <template>
+      <div id="inspire">   
+        <v-app-bar color="blue darken-3">     
+               <v-toolbar-title
+                    style="width: 200px; cursor: pointer"
+                    class="ml-0 pl-4"
+            >
+                <v-icon>home</v-icon>   
+                <span @click="goHome">Ubeat</span>
+            </v-toolbar-title>          
+            <v-spacer class="hidden-md-and-up"></v-spacer>  
+            <v-list   class="hidden-sm-and-down"  color="blue darken-3">
+                <v-list-item
+                        link
+                >
+                   <v-list-item-title @click="navigateToPlaylists">Playlists</v-list-item-title>
+
+                </v-list-item>
+            </v-list>               
+            
+             <v-text-field
+                    flat
+                    solo-inverted
+                    hide-details
+                    prepend-inner-icon="search"
+                    label="Search for artists or playlists"
+                    class="hidden-sm-and-down"></v-text-field>
+         <v-spacer class="hidden-sm-and-down"></v-spacer>
+            
+         <v-menu class="hidden-sm-and-down"  bottom offset-y> 
+             <template v-slot:activator="{ on }">
+      
+        <span v-on="on" class="hidden-sm-and-down">  <v-icon>mdi-account-circle</v-icon></span>
+         </template>      
+        
+        <v-list dense>
+        <v-list-item  link>
+        <v-list-item-icon><v-icon>settings</v-icon></v-list-item-icon>
+        <v-list-item-content>
+         <v-list-item-title>Settings</v-list-item-title>
+        </v-list-item-content>
+        </v-list-item>
+         <v-divider></v-divider>
+        <v-list-item  link>
+        <v-list-item-icon><v-icon>logout</v-icon></v-list-item-icon>
+        <v-list-item-content>
+         <v-list-item-title>Sign Out </v-list-item-title>
+        </v-list-item-content>
+        </v-list-item>      
+      </v-list>
+  
+            
+    </v-menu>          
+    <v-spacer class="hidden-sm-and-down"></v-spacer> 
+            <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = !drawer"></v-app-bar-nav-icon>  
+    </v-app-bar>
+       
+        <v-navigation-drawer v-model="drawer" class="hidden-lg-and-up" dark>
+               <v-list color="blue darken-3" dark>
+                <v-list-item
+                        link
+
+                >
+                   <v-list-item-title @click="navigateToPlaylists">Playlists</v-list-item-title>
+
+                </v-list-item>                
+                  <v-divider></v-divider>
+                  <v-list-item>
+                   <v-text-field
+                    flat
+                    solo-inverted
+                    hide-details
+                    prepend-inner-icon="search"
+                    label="Search for artists or playlists"
+                    ></v-text-field>
+                  </v-list-item>
+        <v-divider></v-divider>
+        <v-list-item>
+               <v-menu  bottom offset-y> 
+             <template v-slot:activator="{ on }">
+      
+        <span v-on="on" >  <v-icon>mdi-account-circle</v-icon></span>
+         </template>  
+        <v-list dense>
+        <v-list-item  link>
+        <v-list-item-icon><v-icon>settings</v-icon></v-list-item-icon>
+        <v-list-item-content>
+         <v-list-item-title>Settings</v-list-item-title>
+        </v-list-item-content>
+        </v-list-item>
+         <v-divider></v-divider>
+        <v-list-item  link>
+        <v-list-item-icon><v-icon>logout</v-icon></v-list-item-icon>
+        <v-list-item-content>
+         <v-list-item-title>Sign Out </v-list-item-title>
+        </v-list-item-content>
+        </v-list-item>      
+      </v-list>
+  
+            
+    </v-menu>          
+        </v-list-item>
+            </v-list>       
+        </v-navigation-drawer>
+       
+    </div>
+
+</template>
+<!--<template>
     <div id="inspire">
         <v-app-bar
                 :clipped-left="$vuetify.breakpoint.lgAndUp"
@@ -62,10 +170,27 @@
             </v-menu>
         </v-app-bar>
     </div>
-</template>
+</template>-->
 
 <script>
-    export default {
+export default {
+    name: 'Navigation',
+    data() {
+        return {
+            drawer: false,           
+        };
+    },
+    methods:{
+            navigateToPlaylists(){
+                this.$router.push('/playlists')
+            },
+            goHome(){
+                this.$router.push('/')
+            }
+    }
+};
+
+  /*  export default {
         props: {
             source: String,
         },
@@ -86,7 +211,7 @@
                 this.$router.push('/')
             }
         }
-    }
+    }*/
 </script>
 <style scoped>
 
