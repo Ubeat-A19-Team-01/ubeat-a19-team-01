@@ -1,4 +1,4 @@
-class Albums {
+/* Module Albums */
 
     getAlbumsById = async(url, id) => {
         const response = await fetch(url + `/albums/${id}`, {
@@ -13,6 +13,5 @@ class Albums {
         });
         return await response.json();
     }
-}
 
-export default Albums;
+
