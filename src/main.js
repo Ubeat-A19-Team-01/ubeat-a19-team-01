@@ -12,7 +12,7 @@ new Vue({
   router,
   provide: () => ({
     myPlaylists: new PlayLists(),
-    myArtists: new Artists()
+    myArtists: new Artists(),
   }),
   render: h => h(App)
 }).$mount('#app');

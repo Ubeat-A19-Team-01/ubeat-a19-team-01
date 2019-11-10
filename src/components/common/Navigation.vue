@@ -43,6 +43,7 @@
                         <v-avatar
                                 size="32px"
                                 item
+                                class="hidden-xs-only"
                         >
                             <v-img
                                     src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
