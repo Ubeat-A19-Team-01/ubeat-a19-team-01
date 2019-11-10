@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Navigation/>
-    <v-content>
+    <v-content class="body">
      <router-view></router-view>
     </v-content>
   </v-app>
@@ -15,10 +15,15 @@ export default {
   name: 'App',
   components: {
     Navigation,
-
   },
+  inject: ['myPlaylists', 'myArtists', 'myAlbums'],
   data: () => ({
     //
   }),
 };
 </script>
+
+<style scoped>
+
+</style>
+

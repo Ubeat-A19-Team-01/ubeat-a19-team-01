@@ -30,7 +30,6 @@ export default new Router({
         },
         {
             path: "/playlists",
-            name: "Playlists",
             component: Playlists,
             children: [
                 {
