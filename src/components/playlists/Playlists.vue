@@ -10,7 +10,6 @@
             >
 
             </v-progress-linear>
-            {{addPlaylist}}
 
             <v-data-table
                     :headers="headers"
