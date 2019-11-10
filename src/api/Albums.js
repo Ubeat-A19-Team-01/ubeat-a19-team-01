@@ -5,7 +5,7 @@
             method: 'GET'
         });
         return await response.json();
-    }
+    };
 
  export const getTracksByAlbumsById = async(url, id) => {
         const response = await fetch(url + `/albums/${id}/tracks`, {
