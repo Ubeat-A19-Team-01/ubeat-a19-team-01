@@ -1,12 +1,12 @@
 <template>
       <div id="inspire">   
-        <v-app-bar color="blue darken-3">     
+        <v-app-bar dark color="blue darken-3" class="mx-1">     
                <v-toolbar-title
                     style="width: 200px; cursor: pointer"
                     class="ml-0 pl-4"
             >
-                <v-icon>home</v-icon>   
-                <span @click="goHome">Ubeat</span>
+                
+                <span @click="goHome"><v-icon>home</v-icon> Ubeat</span>
             </v-toolbar-title>          
             <v-spacer class="hidden-md-and-up"></v-spacer>  
             <v-list   class="hidden-sm-and-down"  color="blue darken-3">
@@ -26,7 +26,13 @@
                     label="Search for artists or playlists"
                     class="hidden-sm-and-down"></v-text-field>
          <v-spacer class="hidden-sm-and-down"></v-spacer>
-            
+            <v-toolbar-items>
+    <v-flex
+      align-center
+      layout
+      py-2
+          
+    >
          <v-menu class="hidden-sm-and-down"  bottom offset-y> 
              <template v-slot:activator="{ on }">
       
@@ -51,11 +57,14 @@
   
             
     </v-menu>          
+    </v-flex>
+  </v-toolbar-items>
+      
     <v-spacer class="hidden-sm-and-down"></v-spacer> 
             <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = !drawer"></v-app-bar-nav-icon>  
     </v-app-bar>
-       
-        <v-navigation-drawer v-model="drawer" class="hidden-lg-and-up" dark>
+        
+        <v-navigation-drawer v-model="drawer" class="hidden-lg-and-up mx-1" dark width="auto">
                <v-list color="blue darken-3" dark>
                 <v-list-item
                         link
