@@ -19,7 +19,7 @@
             </tr>
             <tr>
               <td>Artist:</td>
-              <td><router-link to="/artist">{{albumData.artistName}}</router-link></td>
+              <td><router-link :to=getArtistRoute>{{albumData.artistName}}</router-link></td>
             </tr>
             <tr>
               <td>Release Date:</td>
@@ -53,14 +53,23 @@ import {getAlbumsById } from '../../api/Albums';
 
 export default {
     components:{AlbumTracks},
-      props:['AlbumId'],
+      
   data() {
     return {
+      routeArtist : '' ,   
+      AlbumId:this.$route.params.id , 
       albumData: {                 
 
       } 
       
     };
+  },
+  computed:{
+      getArtistRoute()
+      {
+       return '/artist/'+this.albumData.artistId
+      }
+    
   },
    methods: {    
     convertDate(inputFormat) {

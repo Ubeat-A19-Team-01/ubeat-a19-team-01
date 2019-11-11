@@ -4,14 +4,27 @@
         <v-row align="center" class="mt-10">
             <h5 class="display-1"> Albums</h5>
         </v-row>
+         <v-row>
+            <v-col cols="12" sm="6" md="3" v-for="item in items" :key="item.color">
+                                  
+              <app-card-album :id=item.albumId :color=item.color v-on:DisplayAlbum="OnDisplayAlbum(item.albumId )">                 
+              </app-card-album>
+            
+            </v-col>
+
+        </v-row>
+    <v-row align="center" class="mt-10">
+            <h5 class="display-1"> Artists</h5>
+        </v-row>
         <v-row>
-            <v-col cols="12" sm="6" md="3" v-for="item in artists" :key="item.color">
+            <v-col cols="12" sm="6" md="3" v-for="item in artists" :key="item.color" >
                 <app-card-artist>
                     <v-card
                             class="mx-auto"
                             :color="item.color"
                             dark
                             max-width="400"
+
                     >
                         <v-card-title>
                             <v-icon
@@ -56,50 +69,16 @@
                 </app-card-artist>
             </v-col>
         </v-row>
-        <v-row align="center" class="mt-10">
-            <h5 class="display-1"> Artists</h5>
-        </v-row>
-        <v-row>
-            <v-col cols="12" sm="6" md="3" v-for="item in items" :key="item.color">
-              <app-card-album>
-                  <v-card
-                          class="mx-auto"
-                          :color="item.color"
-                          dark
-                          max-width="400"
-                  >
-                      <div class="d-flex flex-no-wrap justify-space-between">
-                          <div>
-                              <v-card-title
-                                      class="headline"
-                                      v-text="item.title"
-                              ></v-card-title>
-
-                              <v-card-subtitle v-text="item.artist"></v-card-subtitle>
-                          </div>
-
-                          <v-avatar
-                                  class="ma-3"
-                                  size="125"
-                                  tile
-                          >
-                              <v-img :src="item.src"></v-img>
-                          </v-avatar>
-                      </div>
-                      <v-card-actions>
-                          <v-btn text>Listen Now</v-btn>
-                      </v-card-actions>
-                  </v-card>
-              </app-card-album>
-            </v-col>
-
-        </v-row>
+     
+       
     </v-container>
 </template>
 
 <script>
     import cardArtist from "./cardArtist";
     import cardAlbum from "./cardAlbum";
+
+
     export default {
         name: "Home",
         components: {
@@ -107,8 +86,8 @@
             appCardAlbum: cardAlbum
         },
         data: () => ({
-            items: [
-                {
+            items: [{albumId:929463779 , color:'#952170'}
+              /*  {
                     color: '#952170',
                     src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
                     title: 'Halcyon Days',
@@ -131,7 +110,7 @@
                     src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
                     title: 'Supermodel',
                     artist: 'Foster the People',
-                }
+                }*/
             ],
 
         artists: [
@@ -178,6 +157,15 @@
         ]
 
         }),
+        methods:{
+         OnDisplayAlbum(id) 
+         {
+           
+             this.$router.push('/Album/'+id)
+         }
+
+        }
+      
     }
 </script>
 

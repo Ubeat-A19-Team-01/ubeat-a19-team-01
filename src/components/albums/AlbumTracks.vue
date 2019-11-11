@@ -1,11 +1,11 @@
 <template>    
-<v-data-table :headers="headers" :items="trackList" class="elevation-1">
-              <template slot="items"   slot-scope="{item}">
+<v-data-table :headers="headers" :items="trackList" class="elevation-1" select-all>
+              <template v-slot="props">
                   <tr>          
-                  <td class="text-xs-right" >{{item.trackNumber}}</td>
-                  <td class="text-xs-right">{{item.trackName}}</td>
-                  <td class="text-xs-right">{{item.artistName}}</td>
-                  <td class="text-xs-right">{{millisToMinutes(item.trackTimeMillis)}}</td>
+                  <td class="text-xs-right" >{{props.item.trackNumber}}</td>
+                  <td class="text-xs-right">{{props.item.trackName}}</td>
+                  <td class="text-xs-right">{{props.item.artistName}}</td>
+                  <td class="text-xs-right">{{millisToMinutes(props.item.trackTimeMillis)}}</td>
                   <td class="text-xs-right">
                        <span>
                 <a href="#">
@@ -30,11 +30,11 @@ export default {
     return {
        
        headers:[
-                  {text:'#',value:'#'},
-                  {text:'Title',value:'Title'},
-                  {text:'Artist',value:'Artist'},
-                  {text:'Lenght',value:'Lenght'},
-                  {text:'Play',value:'Play'},
+                  {text:'#',value:'trackNumber'},
+                  {text:'Title',value:'trackName'},
+                  {text:'Artist',value:'artistName'},
+                  {text:'Lenght',value:'trackTimeMillis'},
+                  {text:'Play',value:''},
 
               ],
       trackList: [      
