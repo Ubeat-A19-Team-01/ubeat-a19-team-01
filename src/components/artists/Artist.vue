@@ -37,7 +37,7 @@
                     </v-icon>
                 </template>
                 <template v-slot:no-data>
-                    <v-btn color="primary" @click="initialize">No Data Right Now</v-btn>
+                    <v-btn color="primary">No Data Right Now</v-btn>
                 </template>
             </v-data-table>
         </v-container>

@@ -7,7 +7,7 @@ class PlayLists{
         const json = await response.json();
         return {
             playlistsT: Object.keys(json).map((k) => json[k]),
-            tracks: Object.keys(json).map((k) => json[k])["tracks"]
+            tracks: Object.keys(json).map((k) => json[k]).tracks
         }
     };
 
@@ -15,7 +15,11 @@ class PlayLists{
         const response = await fetch(url + `playlists/${id}`, {
             method: 'GET'
         });
-        return await response.json();
+        const json = await response.json();
+        return {
+            playlistsT: Object.keys(json).map((k) => json[k]),
+            tracks: Object.keys(json).map((k) => json[k])["tracks"]
+        }
     };
 
     createPlaylists = async(url, name) => {
@@ -26,7 +30,11 @@ class PlayLists{
             },
             body: JSON.stringify(name)
         });
-        return await response.json();
+        const json = await response.json();
+        return {
+            playlistsT: Object.keys(json).map((k) => json[k]),
+            tracks: Object.keys(json).map((k) => json[k])["tracks"]
+        }
     };
 
     modifyPlaylistsById = async(url, id, name) => {
@@ -39,18 +47,26 @@ class PlayLists{
                 name: name
             })
         });
-        return await response.json();
+        const json = await response.json();
+        return {
+            playlistsT: Object.keys(json).map((k) => json[k]),
+            tracks: Object.keys(json).map((k) => json[k])["tracks"]
+        }
     };
 
-    deletePlaylistsById = async(url, id) => {
-        const response = await fetch(url +`playlists/${id}`, {
+    deletePlaylistsById = async(id) => {
+        const response = await fetch(`https://ubeat.herokuapp.com/unsecure/playlists/${id}`, {
             method: 'DELETE'
         });
-        return await response.json();
+        const json = await response.json();
+        return {
+            playlistsT: Object.keys(json).map((k) => json[k]),
+            tracks: Object.keys(json).map((k) => json[k])["tracks"]
+        }
     };
 
     addPlaylistsTracksById = async(url, id, track) => {
-        const response = await fetch(url + `playlists/${id}/${track}`, {
+        const response = await fetch(url + `playlists/${id}/tracks`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

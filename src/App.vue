@@ -16,7 +16,7 @@ export default {
   components: {
     Navigation,
   },
-  inject: ['myPlaylists', 'myArtists', 'myAlbums'],
+  inject: ['myPlaylists', 'myArtists'],
   data: () => ({
     //
   }),

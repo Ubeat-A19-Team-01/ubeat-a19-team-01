@@ -4,10 +4,9 @@ import Home from "../components/common/Home";
 import Album from "../components/albums/Album";
 import Artist from "../components/artists/Artist";
 import Playlists from "../components/playlists/Playlists";
-import PlaylistDetail from "../components/playlists/PlaylistDetail";
-import AddPlaylist from "../components/playlists/AddPlaylist";
-import ModifyPlaylist from "../components/playlists/ModifyPlaylist";
-import AddTrackPlaylist from "../components/playlists/AddTrackPlaylist";
+import TracksPlaylist from "../components/playlists/TracksPlaylist";
+import TrackPerPlaylist from "../components/playlists/TrackPerPlaylist";
+import TracksOnlyPerPlaylist from "../components/playlists/TrackOnlyPerPlaylist";
 
 Vue.use(Router);
 
@@ -33,22 +32,19 @@ export default new Router({
             component: Playlists,
             children: [
                 {
-                    path: ':id',
-                    name: 'PlaylistDetail',
-                    component: PlaylistDetail,
+                    path: '/playlists/:id',
+                    component: TrackPerPlaylist,
+                    children: [
+                        {
+                            path: '',
+                            component: TracksOnlyPerPlaylist
+                        }
+                    ]
                 },
                 {
                     path: '',
-                    component: AddPlaylist,
+                    component: TracksPlaylist,
                 },
-                {
-                    path: 'modify/:id',
-                    component: ModifyPlaylist,
-                },
-                {
-                    path: ':id/tracks',
-                    component: AddTrackPlaylist,
-                }
             ]
         },
     ]
