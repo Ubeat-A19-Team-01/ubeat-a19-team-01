@@ -18,7 +18,8 @@ export default {
   },
   inject: ['myPlaylists', 'myArtists'],
   data: () => ({
-    //
+    // 
+    
   }),
 };
 </script>
