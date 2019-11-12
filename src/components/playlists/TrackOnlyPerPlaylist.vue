@@ -3,8 +3,7 @@
         <v-container>
             <v-data-table
                     :headers="headers"
-                    :items="tracks"
-                    sort-by="calories"
+                    :items="tracks"                  
                     class="elevation-1"
             >
                 <template v-slot:top>

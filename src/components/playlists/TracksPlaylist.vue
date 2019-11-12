@@ -13,8 +13,7 @@
             </v-progress-linear>
             <v-data-table
                     :headers="headers"
-                    :items="myTracks"
-                    sort-by="calories"
+                    :items="myTracks"                 
                     class="elevation-1"
             >
                 <template v-slot:top>

@@ -20,7 +20,7 @@
 
             <v-card-text>
               <v-container>
-                <vuetify-audio :file="trackItem.previewUrl" :ended="audioFinish"></vuetify-audio>
+                <Player :Musicfile="trackItem.previewUrl" />
               </v-container>
             </v-card-text>
 
@@ -52,8 +52,7 @@
 <script>
 import API_ENDPOINT from "../../api/GetEndPoint.js";  
 import {getTracksByAlbumsById } from '../../api/Albums';
-import VuetifyAudio from 'vuetify-audio';
-        
+import  Player from '../common/Player';        
         
 
 export default {
@@ -84,7 +83,7 @@ export default {
       ]
     };
   },
-  components:{'vuetify-audio': VuetifyAudio} ,
+  components:{Player} ,
    methods: {
     millisToMinutes: function(timeMillis) {
       let result = "";
@@ -100,9 +99,7 @@ export default {
      this.dialog=true ; 
     }
     ,
-    audioFinish () {
-				this.msgs.push('The audio finished.');
-      },
+   
       close () {
         this.dialog = false
         setTimeout(() => {

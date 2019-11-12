@@ -49,7 +49,7 @@
         inject: ['myArtists'],
         data: () => ({
             url: `https://ubeat.herokuapp.com/unsecure/`,
-            id: 3941697,
+            id: this.$route.params.id ,
             artists: [],
             resultFilter: [],
             resultCount: '',
