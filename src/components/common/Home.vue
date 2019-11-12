@@ -86,7 +86,8 @@
             appCardAlbum: cardAlbum
         },
         data: () => ({
-            items: [{albumId:929463779 , color:'#952170'}
+            items: [{albumId:929463779 , color:'#952170'},
+                    {albumId:303156530 , color:'#952175'}
               /*  {
                     color: '#952170',
                     src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
