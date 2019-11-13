@@ -209,7 +209,7 @@
                                 vertical
                         ></v-divider>
                         <v-spacer></v-spacer>
-                        <v-dialog v-model="dialog" max-width="600px">
+                        <v-dialog v-model="dialogTrack" max-width="600px">
                             <template v-slot:activator="{ on }">
                                 <v-btn color="secondary" dark class="mb-2 mr-2" v-on="on">Add Track</v-btn>
                             </template>
@@ -357,6 +357,7 @@
             myTracks: [],
             playlistsLoaded: true,
             dialog: false,
+            dialogTrack: false,
             editDelete: false,
             getPlaylistDialog: false,
             headers: [
@@ -560,6 +561,7 @@
 
             close () {
                 this.dialog = false;
+                this.dialogTrack = false;
                 this.editDelete = false;
                 this.getPlaylistDialog = false;
             },
