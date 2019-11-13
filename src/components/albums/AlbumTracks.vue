@@ -45,7 +45,20 @@
       </v-icon>
      
     </template>
-             
+              <template  v-slot:footer>
+       <v-row align="center" class="ml-4" >
+         <v-col class="d-flex" cols="12" sm="6">
+        <v-select
+          :items="items"
+          label="Select PlayList"
+          dense 
+        ></v-select>
+      </v-col>
+      <v-col class="d-flex" cols="12" sm="6">
+        <v-btn v-on:click="AddToPlayList">Add to PlayList</v-btn>
+      </v-col>
+       </v-row>      
+      </template>        
             </v-data-table>
 
 </template>
@@ -106,6 +119,12 @@ export default {
           this.trackItem = {trackName:'',previewUrl:''} ; //Object.assign({}, this.defaultTrackItem)
          
         }, 300)
+      },
+       AddToPlayList()
+      {
+       //alert(this.selected.lenght) ; 
+       //todo test si pas de track selectionné afficher une notification 
+       // sinon on ajoute chaq track selectionné à la play list 
       }
   },
     created() {
