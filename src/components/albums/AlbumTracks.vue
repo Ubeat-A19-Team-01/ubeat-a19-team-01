@@ -6,7 +6,7 @@
    :single-select="singleSelect" 
    v-model="selected"
    item-key="trackNumber"
-   ref="datatrack"
+ 
    >
    
     <template v-slot:top>
@@ -49,19 +49,30 @@
               <template  v-slot:footer>
        <v-row align="center" class="ml-4" >
          <v-col class="d-flex" cols="12" sm="6">
-        <v-select
-          
+        <v-select v-if="selected.length>0"
+          v-model="playlistSelect"
           :items="dataItemsSelect"          
           label="Select PlayList"
           dense 
-          ref="playlistSelect"
-          @change="selectedSelectItem"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="12" sm="6">
-        <v-btn  v-on:click="AddToPlayList">Add to PlayList</v-btn>
-      </v-col>
-       </v-row>      
+        <v-btn v-if="playlistSelect.length>0 && selected.length>0" v-on:click="AddToPlayList">Add to PlayList</v-btn>
+      </v-col>       
+       </v-row>    
+       <v-row>
+       <v-col>
+          <v-alert
+          v-model=alert
+          :color=messageInfo.color
+      dismissible
+      type="success"
+    >
+     {{messageInfo.text}}
+    </v-alert>
+     
+       </v-col>
+       </v-row>  
       </template>        
             </v-data-table>
 
@@ -77,13 +88,15 @@ export default {
      inject: ['myPlaylists'],      
       data() {
     return {
-      singleSelect: false,
-      //selectedSelectItem:false ,
-          selected: [],
+      singleSelect: false,       
+       alert :false ,   
+       messageInfo:{color:'' ,text:''} ,            
+       selected: [],
        dialog: false,
        trackItem: {              
       },
       dataItemsSelect:[],
+      playlistSelect:[], 
       playlists: [],
         tracks: [],
        headers:[
@@ -132,19 +145,15 @@ export default {
       },
        AddToPlayList()
       {
-        //debugger ; 
-        const playlistSelected = this.selectedSelectItem() ; 
-        let selectTracks= [] 
-        selectTracks= this.selectedTrack() ; 
-        alert(selectTracks);
-
-       try
-       {
-       selectTracks.forEach(track=>
-         {
+       
+        try
+        {
+          
+        this.selected.forEach(track=>
+          {
 
           const trackItem =   {
-                playlistId: playlistSelected[1].id,
+                playlistId: this.playlistSelect,
                 wrapperType: track.wrapperType,
                 kind: track.kind,
                 artistId: track.id,
@@ -178,45 +187,27 @@ export default {
                 contentAdvisoryRating: track.contentAdvisoryRating,
                 radioStationUrl: ''
             }
-            this.myPlaylists.addPlaylistsTracksById(API_ENDPOINT, playlistSelected[1].id, trackItem)
-
+            this.myPlaylists.addPlaylistsTracksById(API_ENDPOINT, this.playlistSelect, trackItem)
+            this.alert=true ;             
+             this.messageInfo.color="success" ; 
+             this.messageInfo.text="Track(s) has been added " 
+           
+           
+              
          }  
        ) ; 
        }   
        catch(e)  
        {
-          alert(e)
-       }
+         this.alert=true ;             
+         this.messageInfo.color="error" ; 
+         this.messageInfo.text=e
+    
+               }       
        
-       //   try{
-          
-
-      //   }
-
-      //   catch(e)
-      //           {
-
-      //  alert(e) ; 
-      //           }
-       //alert(this.selected.lenght) ; 
-       //todo test si pas de track selectionné afficher une notification 
-       // sinon on ajoute chaq track selectionné à la play list 
       },
-        selectedSelectItem()
-     {
-      /// return false ; 
-       return this.$refs.playlistSelect.selectedItems ;
-
-      //return this.$refs.playlistSelect.selectedItems
-      // alert(this.$refs.playlistSelect.selectedItems.length) ; 
-       
-
-       
-     } ,
-     selectedTrack()
-     {
-      return this.$refs.datatrack.selection ; 
-     } 
+    
+ 
 
   },
   async  created() {

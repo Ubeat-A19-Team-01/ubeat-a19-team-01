@@ -13,7 +13,7 @@
             <v-data-table
                     :headers="headers"
                     :items="resultFilter"
-                    :item-key="artists.artistId"
+                    :item-key="artistId"
 
                     class="elevation-1"
             >
@@ -49,7 +49,7 @@
         inject: ['myArtists'],
         data: () => ({
             url: `https://ubeat.herokuapp.com/unsecure/`,
-            id: this.$route.params.id ,
+           // id: this.$route.params.id ,
             artists: [],
             resultFilter: [],
             resultCount: '',
@@ -76,11 +76,22 @@
                 { text: 'Actions', value: 'action', sortable: false },
             ],
         }),
-        async created(){
+         created(){
             try{
-                const {result} = await this.myArtists.getArtistsById(this.url, this.id);
-                this.resultFilter = result;
+                // const {result} = await this.myArtists.getArtistsById(this.url, this.id);
+                // this.resultFilter = result;
 
+                  //const {result} = await 
+                   this.myArtists.getArtistsById(this.url, this.$route.params.id).then(
+                    reponse =>{
+                        const result = reponse ; 
+                        this.resultFilter = result.results[0];
+                    } 
+
+                   )
+                
+ 
+                  
                 //this.resultFilter.push({resultCount})
                 //this.myArtists.getAlbumsByArtistsId(this.url, this.id).then(data => this.artists.push(data));
                 //this.myArtists.getAlbumsByArtistsId(this.url, this.id).then(data => this.artists = Object.keys(data).map((k) => data[k]))
@@ -98,7 +109,7 @@
             getPlaylistId (playlistId) {
                 try{
                     const playlistIndex = this.playlists.findIndex(singlePlaylist => singlePlaylist.id === playlistId);
-                    this.myArtists.getAlbumsByArtistsId(this.url).then( () => {
+                    this.myArtists.getAlbumsByArtistsId(this.url,).then( () => {
                         this.getPlaylist.name = name;
                         this.getPlaylist.email = this.playlists[playlistIndex].owner.email;
                     });
