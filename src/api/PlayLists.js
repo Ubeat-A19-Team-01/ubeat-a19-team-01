@@ -78,8 +78,8 @@ class PlayLists{
         return await response.json();
     };
 
-    deletePlaylistsByIdAndTrackId = async(url, id, trackId) => {
-        const response = await fetch(url + `playlists/${id}/tracks/${trackId}`, {
+    deletePlaylistsByIdAndTrackId = async(id, trackId) => {
+        const response = await fetch(`https://ubeat.herokuapp.com/unsecure/playlists/${id}/tracks/${trackId}`, {
             method: 'DELETE'
         });
         return await response.json();

@@ -166,7 +166,7 @@
             <v-data-table
                     :headers="headersTrack"
                     :items="myTracks"
-                    sort-by="calories"
+                    :item-key="myTracks.trackId"
                     class="elevation-1"
             >
                 <template v-slot:top>
@@ -190,7 +190,7 @@
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="addTracks.name" label="Playlist Id"></v-text-field>
+                                                <v-text-field v-model="addTracks.playlistId" label="Playlist Id"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
                                                 <v-text-field v-model="addTracks.wrapperType" label="Wrapper Type"></v-text-field>
@@ -303,7 +303,7 @@
                 <template v-slot:item.action="{ item }">
                     <v-icon
                             small
-                            @click="deleteItemTrack(item.id)"
+                            @click="deleteItemTrack(item)"
                     >
                         delete
                     </v-icon>
@@ -430,11 +430,6 @@
                 track: []
             },
         }),
-
-        computed: {
-
-        },
-
         watch: {
             dialog (val) {
                 val || this.close()
@@ -497,8 +492,6 @@
                     alert(e)
                 }
                 this.getPlaylistDialog = true;
-                //const idRoute = this.getPlaylist.id;
-
             },
 
             deleteItem (playlistId) {
@@ -548,8 +541,8 @@
             },
             deleteItemTrack (playlistId) {
                 try{
-                    const playlistIndex = this.myTracks.findIndex(singlePlaylist => singlePlaylist.id === playlistId);
-                    this.myPlaylists.deletePlaylistsByIdAndTrackId(this.url, this.addTracks.trackId, playlistId).then(() => {
+                    const playlistIndex = this.myTracks.findIndex(singlePlaylist => singlePlaylist.trackId === playlistId.trackId);
+                    this.myPlaylists.deletePlaylistsByIdAndTrackId(playlistId.id, playlistId.trackId).then(() => {
                         this.myTracks.splice(playlistIndex, 1)
                     });
                 }catch(e){
