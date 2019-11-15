@@ -23,17 +23,19 @@ class PlayLists{
     };
 
     createPlaylists = async(url, name) => {
-        const response = await fetch(url + 'playlist', {
+        const response = await fetch(url + 'playlists', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(name)
+            body: JSON.stringify({
+               name: name.name,
+               owner: name.owner
+            })
         });
         const json = await response.json();
         return {
-            playlistsT: Object.keys(json).map((k) => json[k]),
-            tracks: Object.keys(json).map((k) => json[k])["tracks"]
+           json
         }
     };
 

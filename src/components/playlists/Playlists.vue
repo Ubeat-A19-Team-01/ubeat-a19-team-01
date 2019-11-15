@@ -40,7 +40,7 @@
                                                 <v-text-field v-model="addPlaylist.name" label="Playlist Name"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="addPlaylist.email" label="Owner Email" type="email"></v-text-field>
+                                                <v-text-field v-model="addPlaylist.owner" label="Owner Email" type="email"></v-text-field>
                                             </v-col>
                                         </v-row>
                                     </v-container>
@@ -101,8 +101,8 @@
                                             </v-col>
                                             <v-col cols="12">
                                                 <v-data-table
-                                                        :headers="headersPerPlaylist"
-                                                        :items="tracks"
+                                                        :headers="headersTrack"
+                                                        :items="myTracks"
                                                         item-key="tracks.id"
                                                         sort-by="calories"
                                                         class="elevation-1"
@@ -117,28 +117,6 @@
                                                             ></v-divider>
                                                             <v-spacer></v-spacer>
                                                         </v-toolbar>
-                                                    </template>
-                                                    <template v-slot:item.action="{ item }">
-                                                        <v-icon
-                                                                small
-                                                                class="mr-2"
-                                                                @click="editPlaylists(item)"
-                                                        >
-                                                            edit
-                                                        </v-icon>
-                                                        <v-icon
-                                                                small
-                                                                class="mr-2"
-                                                                @click="deleteItem(item.id)"
-                                                        >
-                                                            delete
-                                                        </v-icon>
-                                                        <v-icon
-                                                                small
-                                                                @click="getPlaylistId(item)"
-                                                        >
-                                                            mdi-checkbox-marked-circle
-                                                        </v-icon>
                                                     </template>
                                                     <template v-slot:no-data>
                                                         <v-btn color="primary">No Data Right Now</v-btn>
@@ -185,15 +163,6 @@
             </v-data-table>
         </v-container>
         <v-container>
-
-            <h4  v-if="myTracks.length ===0"  class="mb-2"> Please wait a few seconds loading....</h4>
-            <v-progress-linear
-                    indeterminate
-                    color="green darken-2"
-                    v-if="myTracks.length ===0"
-                    class="mb-2"
-            >
-            </v-progress-linear>
             <v-data-table
                     :headers="headersTrack"
                     :items="myTracks"
@@ -352,9 +321,15 @@
         inject: ['myPlaylists'],
         data: () => ({
             url: 'https://ubeat.herokuapp.com/unsecure/',
+            users: {
+              name: "a19-team28",
+              email: "a19-team28@team28.com",
+              password: "19Team28"
+            },
             playlists: [],
             tracks: [],
             myTracks: [],
+            playlistIdTrack: {},
             playlistsLoaded: true,
             dialog: false,
             dialogTrack: false,
@@ -373,38 +348,12 @@
                 { text: 'Emails', value: 'owner.email' },
                 { text: 'Actions', value: 'action', sortable: false },
             ],
-            headersPerPlaylist: [
-                {
-                    text: 'Id',
-                    align: 'left',
-                    sortable: false,
-                    value: '_id',
-                },
-                { text: 'Track Id', value: 'trackId' },
-                { text: 'Artist Id', value: 'artistId' },
-                { text: 'Collection Id', value: 'collectionId' },
-                { text: 'Artist Name', value: 'tracks.artistName' },
-                { text: 'Collection Name', value: 'collectionName' },
-                { text: 'Track Name', value: 'trackName' },
-                { text: 'Collection Censored Name', value: 'collectionCensoredName' },
-                { text: 'Artist View Url', value: 'artistViewUrl' },
-                { text: 'Collection View Url', value: 'collectionViewUrl' },
-                { text: 'Track View Url', value: 'trackViewUrl' },
-                { text: 'Preview Url', value: 'previewUrl' },
-                { text: 'Collection Price', value: 'collectionPrice' },
-                { text: 'Track Price', value: 'trackPrice' },
-                { text: 'Release Date', value: 'releaseDate' },
-                { text: 'Country', value: 'country' },
-                { text: 'Currency', value: 'currency' },
-                { text: 'Primary Genre Name', value: 'primaryGenreName' },
-                { text: 'Actions', value: 'action', sortable: false },
-            ],
             headersTrack: [
                 {
-                    text: 'Id',
+                    text: 'Playlist Id',
                     align: 'left',
                     sortable: false,
-                    value: '_id',
+                    value: 'id',
                 },
                 { text: 'Track Id', value: 'trackId' },
                 { text: 'Artist Id', value: 'artistId' },
@@ -464,7 +413,7 @@
             editedIndex: -1,
             addPlaylist: {
                 name: '',
-                email: '',
+                owner: 'a19-team28@team28.com',
             },
             editPlaylist: {
                 id: '',
@@ -495,7 +444,7 @@
             try{
                 //this.myPlaylists.getPlaylists(this.url).then(data => this.playlists = Object.keys(data).map((k) => data[k]));
                 const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(this.url);
-                this.playlists = playlistsT;
+                this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
                 this.tracks = tracks
             }catch(e){
                 alert(e)
@@ -521,10 +470,13 @@
             },
             addPlaylists() {
 
-                    this.myPlaylists.createPlaylists(this.url, this.addPlaylist).then(data => {
-                        this.playlists = Object.keys(data).map((k) => data[k])
-                    });
-                    this.close()
+                //const {playlistsT} = this.myPlaylists.createPlaylists(this.url, this.addPlaylist);
+                //this.myPlaylists.createPlaylists(this.url, this.addPlaylist);
+                ///this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
+                this.myPlaylists.createPlaylists(this.url, this.addPlaylist).then(data => {
+                    this.playlists.push(data)
+                });
+                this.close()
 
             },
 
@@ -588,8 +540,11 @@
 
             extractTracks(){
                 for(let element of this.playlists){
+                    let arrayTrack = [];
                     if(element.tracks.length !== 0){
-                        this.myTracks =(element.tracks)
+                        arrayTrack =(element.tracks);
+                        this.playlistIdTrack.id = element.id;
+                        this.myTracks = arrayTrack.map((day) => Object.assign(this.playlistIdTrack, day))
                     }
 
                 }
