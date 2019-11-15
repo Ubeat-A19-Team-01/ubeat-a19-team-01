@@ -52,46 +52,7 @@
             {ArtistId:3941697,color:'#4a148c',icon:'mdi-music'}
 
             
-            // {
-            //     color: '#26c6da',
-            //     icon: 'mdi-music',
-            //     style: 'Rap',
-            //     text: 'Turns out semicolon-less style is easier and safer',
-            //     src: 'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light',
-            //     artistName: 'Evan You',
-            //     numberLike: '260',
-            //     NumberShare: '89'
-            // },
-            // // {
-            //     color: '#c51162',
-            //     icon: 'mdi-music',
-            //     style: 'Country',
-            //     text: 'Turns out semicolon-less style is easier and safer',
-            //     src: 'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light',
-            //     artistName: 'Justin Dj.',
-            //     numberLike: '50',
-            //     NumberShare: '993'
-            // },
-            // {
-            //     color: '#880e4f',
-            //     icon: 'mdi-music',
-            //     style: 'Pop',
-            //     text: 'Turns out semicolon-less style is easier and safer',
-            //     src: 'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light',
-            //     artistName: 'Nguess R.',
-            //     numberLike: '190',
-            //     NumberShare: '13'
-            // },
-            // {
-            //     color: '#4a148c',
-            //     icon: 'mdi-music',
-            //     style: 'Jazz',
-            //     text: 'Turns out semicolon-less style is easier and safer',
-            //     src: 'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light',
-            //     artistName: 'Rachel S.',
-            //     numberLike: '150',
-            //     NumberShare: '93'
-            // }
+            
         ]
 
         }),
@@ -103,7 +64,7 @@
          } , 
 
          OnDisplayArtist(id){
-             this.$router.push('/artists/'+id) ;
+             this.$router.push('/artist/'+id) ;
 
          } 
 
