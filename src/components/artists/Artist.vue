@@ -8,12 +8,10 @@
                     v-if="resultFilter.length ===0"
                     class="mb-2"
             >
-
             </v-progress-linear>
             <v-data-table
                     :headers="headers"
                     :items="resultFilter"
-                    :item-key="artistId"
 
                     class="elevation-1"
             >
@@ -76,25 +74,10 @@
                 { text: 'Actions', value: 'action', sortable: false },
             ],
         }),
-         created(){
+         async created(){
             try{
-                // const {result} = await this.myArtists.getArtistsById(this.url, this.id);
-                // this.resultFilter = result;
-
-                  //const {result} = await 
-                   this.myArtists.getArtistsById(this.url, this.$route.params.id).then(
-                    reponse =>{
-                        const result = reponse ; 
-                        this.resultFilter = result.results[0];
-                    } 
-
-                   )
-                
- 
-                  
-                //this.resultFilter.push({resultCount})
-                //this.myArtists.getAlbumsByArtistsId(this.url, this.id).then(data => this.artists.push(data));
-                //this.myArtists.getAlbumsByArtistsId(this.url, this.id).then(data => this.artists = Object.keys(data).map((k) => data[k]))
+                const {result} = await this.myArtists.getArtistsById(this.url, this.$route.params.id);
+                this.resultFilter = result;
             }catch(e){
                 alert(e)
             }

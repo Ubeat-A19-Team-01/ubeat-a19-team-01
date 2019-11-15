@@ -13,7 +13,7 @@ class Albums
             method: 'GET'
         });
         return await response.json();
-    }
+    };
 
 }
 export default Albums ; 
