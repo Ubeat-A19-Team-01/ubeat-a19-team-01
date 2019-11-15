@@ -46,14 +46,12 @@
 
 <script>
 import AlbumTracks from '../albums/AlbumTracks.vue';
-
 import API_ENDPOINT from "../../api/GetEndPoint.js";  
-import {getAlbumsById } from '../../api/Albums';
 
 
 export default {
     components:{AlbumTracks},
-      
+    inject: ['myAlbums'] ,       
   data() {
     return {
       routeArtist : '' ,   
@@ -80,7 +78,7 @@ export default {
 
   },
   created() {
-                   getAlbumsById(API_ENDPOINT,this.AlbumId).then(
+                  this.myAlbums.getAlbumsById(API_ENDPOINT,this.AlbumId).then(
               response=>{
                  
                   let dataAlbum=response ; 

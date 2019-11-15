@@ -31,9 +31,10 @@
 
 <script>
     import API_ENDPOINT from "../../api/GetEndPoint.js";  
-    import {getAlbumsById } from '../../api/Albums';
+    
 
     export default {
+        inject:['myAlbums'],
         props:['id','color'] , 
         name: "cardAlbum",
         data()
@@ -48,7 +49,7 @@
        created()
        {
            
-         getAlbumsById(API_ENDPOINT,this.id).then(
+        this.myAlbums. getAlbumsById(API_ENDPOINT,this.id).then(
             response=>{                 
             let dataAlbum=response ; 
                if(dataAlbum.resultCount!==0)                  {

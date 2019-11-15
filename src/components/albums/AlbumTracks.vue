@@ -78,14 +78,13 @@
 
 </template>
 <script>
-import API_ENDPOINT from "../../api/GetEndPoint.js";  
-import {getTracksByAlbumsById } from '../../api/Albums';
+import API_ENDPOINT from "../../api/GetEndPoint.js";
 import  Player from '../common/Player';        
         
 
 export default {
      props:['AlbumId'],
-     inject: ['myPlaylists'],      
+     inject: ['myPlaylists','myAlbums'],      
       data() {
     return {
       singleSelect: false,       
@@ -114,6 +113,7 @@ export default {
       trackList: [      
         
       ],
+     
       
       
       };
@@ -211,7 +211,7 @@ export default {
 
   },
   async  created() {
-         getTracksByAlbumsById(API_ENDPOINT,this.AlbumId).then(
+         this.myAlbums.getTracksByAlbumsById(API_ENDPOINT,this.AlbumId).then(
         response =>{
              let datatrack=response ; 
              if(datatrack.resultCount>0) 
@@ -224,6 +224,10 @@ export default {
          const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
                 this.playlists = playlistsT;
                 this.tracks = tracks
+
+                //  const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
+                // this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
+                // this.tracks = tracks
         
        this.playlists.forEach(el=>
        {
@@ -231,7 +235,7 @@ export default {
          this.dataItemsSelect.push(itemS) ; 
        })
 
-       
+      // this.dataItemsSelect = this.dataItemsSelect.filter(em=>em.email='a19-team28@team28.com');
             
                // this.playlists = playlistsT;
               
