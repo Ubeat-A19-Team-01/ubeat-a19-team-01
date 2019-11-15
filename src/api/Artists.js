@@ -4,14 +4,12 @@ class Artists {
         const response = await fetch(url + `artists/${id}`, {
             method: 'GET'
         });
-        return await response.json() ; 
+        const json = await response.json() ;
         // const json = await response.json();
         // return json ; 
-
-
-        //return {
-          //   result: json.results.map((day) => Object.assign({resultCount:json.resultCount}, day))
-        // }
+        return {
+             result: json.results.map((day) => Object.assign({resultCount:json.resultCount}, day))
+         }
     };
 
     getAlbumsByArtistsId = async(url, id) => {

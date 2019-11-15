@@ -10,9 +10,6 @@ export default {
    audioFinish () {
 				this.msgs.push('The audio finished.');
       },
-
-
     }
-
 }
 </script>

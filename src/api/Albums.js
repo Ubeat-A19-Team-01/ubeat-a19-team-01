@@ -12,6 +12,6 @@
             method: 'GET'
         });
         return await response.json();
-    }
+    };
 
 

@@ -316,6 +316,7 @@
     </div>
 </template>
 <script>
+    import  API_ENDPOINT from '../../api/GetEndPoint'
     export default {
         name: "Playlists",
         inject: ['myPlaylists'],
@@ -519,11 +520,7 @@
             },
 
             save () {
-                if (this.editedIndex > -1) {
-                    Object.assign(this.playlists[this.editedIndex], this.editedItem)
-                } else {
-                    this.playlists.push(this.editedItem)
-                }
+                this.myPlaylists.addPlaylistsTracksById(API_ENDPOINT, this.playlistSelect, 'trackItem');
                 this.close()
             },
             modifyPlaylists (playlistId, newName) {
@@ -552,7 +549,6 @@
             deleteItemTrack (playlistId) {
                 try{
                     const playlistIndex = this.myTracks.findIndex(singlePlaylist => singlePlaylist.id === playlistId);
-                    alert(playlistIndex);
                     this.myPlaylists.deletePlaylistsByIdAndTrackId(this.url, this.addTracks.trackId, playlistId).then(() => {
                         this.myTracks.splice(playlistIndex, 1)
                     });

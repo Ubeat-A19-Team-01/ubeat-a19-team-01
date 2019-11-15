@@ -1,17 +1,13 @@
 <template>
     <v-container class="body font-weight-bold">
-        <h2 class="display-1"> Ubeat</h2>
         <v-row align="center" class="mt-10">
             <h5 class="display-1"> Albums</h5>
         </v-row>
          <v-row>
             <v-col cols="12" sm="6" md="3" v-for="item in items" :key="item.color">
-                                  
               <app-card-album :id=item.albumId :color=item.color v-on:DisplayAlbum="OnDisplayAlbum(item.albumId )">                 
               </app-card-album>
-            
             </v-col>
-
         </v-row>
         <v-row align="center" class="mt-10">
             <h5 class="display-1"> Artists</h5>
@@ -22,15 +18,12 @@
                 </app-card-artist>
             </v-col>
         </v-row>
-     
-       
     </v-container>
 </template>
 
 <script>
     import cardArtist from "./cardArtist";
     import cardAlbum from "./cardAlbum";
-
 
     export default {
         name: "Home",
@@ -43,33 +36,26 @@
                     {albumId:303156530 , color:'#952175'},
                     {albumId:1446630735 , color:'#c51162'},
                     {albumId:254528681 , color:'880e4f'}
-
-              
             ],
 
         artists: [
             {ArtistId:140083,color:'#26c6da',icon:'mdi-music'},
-            {ArtistId:3941697,color:'#4a148c',icon:'mdi-music'}
-
-            
-            
+            {ArtistId:3941697,color:'#4a148c',icon:'mdi-music'},
+            {ArtistId:3941697,color:'#c51162',icon:'mdi-music'},
+            {ArtistId:3941697,color:'#4a149c',icon:'mdi-music'}
         ]
 
         }),
         methods:{
-         OnDisplayAlbum(id) 
-         {
-           
-             this.$router.push('/Album/'+id)
-         } , 
+             OnDisplayAlbum(id)
+             {
+                 this.$router.push('/Album/'+id)
+             } ,
 
-         OnDisplayArtist(id){
-             this.$router.push('/artist/'+id) ;
-
-         } 
-
+             OnDisplayArtist(id){
+                 this.$router.push('/artist/'+id) ;
+             }
         }
-      
     }
 </script>
 

@@ -35,8 +35,8 @@
                                 </v-list-item-content>
 
                                 <v-row
-                                        align="center"
-                                        justify="end"
+                                    align="center"
+                                    justify="end"
                                 >
                                     <v-icon class="mr-1">mdi-heart</v-icon>
                                     <span class="subheading mr-2"></span>
@@ -67,20 +67,14 @@
         } 
         , 
        async created() {
-            
-            
              this.myArtists.getArtistsById(API_ENDPOINT,this.id).then(
              response =>{
-                 const ArtistData = response ; 
+                 const ArtistData = response ;
                  this.Artist = ArtistData.results[0];
 
              }
-
-
              );
-                
-               
-        }
+        },
     }
 </script>
 

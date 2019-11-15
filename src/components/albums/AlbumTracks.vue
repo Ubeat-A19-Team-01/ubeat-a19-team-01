@@ -131,13 +131,13 @@ export default {
     }   ,
     playTrack(item)
     {
-     this.trackItem = Object.assign({},item)
+     this.trackItem = Object.assign({},item);
      this.dialog=true ; 
     }
     ,
    
       close () {
-        this.dialog = false
+        this.dialog = false;
         setTimeout(() => {
           this.trackItem = {trackName:'',previewUrl:''} ; //Object.assign({}, this.defaultTrackItem)
          
@@ -155,8 +155,8 @@ export default {
           const trackItem =   {
                 playlistId: this.playlistSelect,
                 wrapperType: track.wrapperType,
-                kind: track.kind,
                 artistId: track.id,
+                kind: track.kind,
                 collectionId: track.collectionId,
                 trackId: track.trackId,
                 artistName: track.artistName,
@@ -165,7 +165,7 @@ export default {
                 collectionCensoredName: track.collectionCensoredName,
                 trackCensoredName: track.trackCensoredName,
                 artistViewUrl: track.artistViewUrl,
-                collectionViewUrl:track ,
+                collectionViewUrl:track.collectionViewUrl ,
                 trackViewUrl:track.trackViewUrl,
                 previewUrl: track.previewUrl,
                 artworkUrl30: track.artworkUrl30,
@@ -186,14 +186,11 @@ export default {
                 primaryGenreName: track.primaryGenreName,
                 contentAdvisoryRating: track.contentAdvisoryRating,
                 radioStationUrl: ''
-            }
-            this.myPlaylists.addPlaylistsTracksById(API_ENDPOINT, this.playlistSelect, trackItem)
+            };
+            this.myPlaylists.addPlaylistsTracksById(API_ENDPOINT, this.playlistSelect, trackItem);
             this.alert=true ;             
              this.messageInfo.color="success" ; 
-             this.messageInfo.text="Track(s) has been added " 
-           
-           
-              
+             this.messageInfo.text="Track(s) has been added "
          }  
        ) ; 
        }   
@@ -223,7 +220,7 @@ export default {
         
          const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
                 this.playlists = playlistsT;
-                this.tracks = tracks
+                this.tracks = tracks;
         
        this.playlists.forEach(el=>
        {
