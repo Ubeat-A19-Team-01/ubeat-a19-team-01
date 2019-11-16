@@ -69,7 +69,7 @@
         </v-list-item>      
       </v-list>
             </v-menu>
-        <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = !drawer"></v-app-bar-nav-icon>  
+        <v-app-bar-nav-icon class="hidden-sm-and-up" @click="drawer = !drawer"></v-app-bar-nav-icon>
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" class="hidden-lg-and-up mx-1 mt-10" dark width="auto">
                <v-list color="blue darken-3" dark>
