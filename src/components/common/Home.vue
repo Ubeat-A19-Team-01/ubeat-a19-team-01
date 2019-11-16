@@ -34,7 +34,7 @@
         data: () => ({
             items: [{albumId:929463779 , color:'#952170'},
                     {albumId:303156530 , color:'#952175'},
-                    {albumId:1446630735 , color:'#c51162'},
+                    {albumId:159292399 , color:'#c51162'},
                     {albumId:254528681 , color:'880e4f'}
             ],
 
@@ -42,7 +42,7 @@
             {ArtistId:140083,color:'#26c6da',icon:'mdi-music'},
             {ArtistId:3941697,color:'#4a148c',icon:'mdi-music'},
             {ArtistId:116851,color:'#c51162',icon:'mdi-music'},
-            {ArtistId:3941697,color:'#4a149c',icon:'mdi-music'}
+            {ArtistId:3996865,color:'#4a149c',icon:'mdi-music'}
         ]
 
         }),
