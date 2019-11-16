@@ -8,7 +8,7 @@ class Artists {
         // const json = await response.json();
         // return json ; 
         return {
-             result: json.results.map((day) => Object.assign({resultCount:json.resultCount}, day))
+             result: json.results.map((eachElement) => Object.assign({resultCount:json.resultCount}, eachElement))
          }
     };
 
@@ -19,7 +19,7 @@ class Artists {
         const json = await response.json();
         return {
             resultCount: json.resultCount,
-            result: json.results.map((day) => Object.assign(json.resultCount, day))
+            result: json.results.map((eachElement) => Object.assign(json.resultCount, eachElement))
         }
     }
 }
