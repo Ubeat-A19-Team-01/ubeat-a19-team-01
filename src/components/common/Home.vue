@@ -41,7 +41,7 @@
         artists: [
             {ArtistId:140083,color:'#26c6da',icon:'mdi-music'},
             {ArtistId:3941697,color:'#4a148c',icon:'mdi-music'},
-            {ArtistId:3941697,color:'#c51162',icon:'mdi-music'},
+            {ArtistId:116851,color:'#c51162',icon:'mdi-music'},
             {ArtistId:3941697,color:'#4a149c',icon:'mdi-music'}
         ]
 

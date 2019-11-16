@@ -97,7 +97,7 @@ export default {
       dataItemsSelect:[],
       playlistSelect:[], 
       playlists: [],
-        tracks: [],
+      tracks: [],
        headers:[
            {text: '(All)',
             align: 'left',
@@ -114,7 +114,11 @@ export default {
         
       ],
      
-      
+       users: {
+              name: "a19-team28",
+              email: "a19-team28@team28.com",
+              password: "19Team28"
+            }
       
       };
   },
@@ -218,18 +222,20 @@ export default {
              }
         } ) ; 
         
-         const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
-                this.playlists = playlistsT;
-                this.tracks = tracks
+        //  const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
+        //         this.playlists = playlistsT;
+        //         this.tracks = tracks
 
-                //  const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
-                // this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
-                // this.tracks = tracks
+             const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
+                this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
+                this.tracks = tracks
         
        this.playlists.forEach(el=>
        {
+        
          const itemS={text:el.name,value:el.id} ; 
          this.dataItemsSelect.push(itemS) ; 
+        
        })
 
       // this.dataItemsSelect = this.dataItemsSelect.filter(em=>em.email='a19-team28@team28.com');

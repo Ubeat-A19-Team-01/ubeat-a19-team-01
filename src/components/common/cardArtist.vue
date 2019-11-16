@@ -59,21 +59,24 @@
         inject:['myArtists'] ,
         data(){
             return{
-            Artist:{ 
-            }
+            Artist:{artistName:'',primaryGenreName:''}
+            
             ,
             avatar:'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light'
             }
         } 
         , 
        async created() {
-             this.myArtists.getArtistsById(API_ENDPOINT,this.id).then(
-             response =>{
-                 const ArtistData = response ;
-                 this.Artist = ArtistData.results[0];
+           const {result} =await this.myArtists.getArtistsById(API_ENDPOINT,this.id) ; 
+           const dataArtiste = result ; 
+           this.Artist={artistName:dataArtiste[0].artistName,primaryGenreName:dataArtiste[0].primaryGenreName};
+              
+            
+                
+            
+              
 
-             }
-             );
+             
         },
     }
 </script>
