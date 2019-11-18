@@ -8,7 +8,7 @@ export default {
     props:['Musicfile'] 
     ,methods:{
    audioFinish () {
-				this.msgs.push('The audio finished.');
+		this.msgs.push('The audio finished.');
       },
     }
 }

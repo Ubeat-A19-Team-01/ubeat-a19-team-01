@@ -6,26 +6,20 @@
    :single-select="singleSelect" 
    v-model="selected"
    item-key="trackNumber"
- 
    >
-   
     <template v-slot:top>
-     
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on }">
-           
           </template>
           <v-card>
             <v-card-title>
               <span class="headline">{{ trackItem.trackName }}</span>
             </v-card-title>
-
             <v-card-text>
               <v-container>
                 <Player :Musicfile="trackItem.previewUrl" />
               </v-container>
             </v-card-text>
-
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>      
@@ -33,55 +27,47 @@
           </v-card>
         </v-dialog>    
     </template>
-
    <template v-slot:item.action="{item }">
       <v-icon
         medium
         class="mr-2" 
         @click="playTrack(item)"
-        
-               
       >
      play_circle_filled
       </v-icon>
-     
     </template>
-              <template  v-slot:footer>
-       <v-row align="center" class="ml-4" >
-         <v-col class="d-flex" cols="12" sm="6">
-        <v-select v-if="selected.length>0"
-          v-model="playlistSelect"
-          :items="dataItemsSelect"          
-          label="Select PlayList"
-          dense 
-        ></v-select>
-      </v-col>
-      <v-col class="d-flex" cols="12" sm="6">
-        <v-btn v-if="playlistSelect.length>0 && selected.length>0" v-on:click="AddToPlayList">Add to PlayList</v-btn>
-      </v-col>       
-       </v-row>    
-       <v-row>
-       <v-col>
-          <v-alert
-          v-model=alert
-          :color=messageInfo.color
-      dismissible
-      type="success"
-    >
-     {{messageInfo.text}}
-    </v-alert>
-     
-       </v-col>
-       </v-row>  
+    <template  v-slot:footer>
+        <v-row align="center" class="ml-4" >
+             <v-col class="d-flex" cols="12" sm="6">
+            <v-select v-if="selected.length>0"
+              v-model="playlistSelect"
+              :items="dataItemsSelect"
+              label="Select PlayList"
+              dense
+            ></v-select>
+          </v-col>
+          <v-col class="d-flex" cols="12" sm="6">
+            <v-btn v-if="playlistSelect.length>0 && selected.length>0" v-on:click="AddToPlayList">Add to PlayList</v-btn>
+          </v-col>
+           </v-row>
+           <v-row>
+           <v-col>
+              <v-alert
+              v-model=alert
+              :color=messageInfo.color
+                  dismissible
+                  type="success"
+                >
+                 {{messageInfo.text}}
+              </v-alert>
+             </v-col>
+        </v-row>
       </template>        
-            </v-data-table>
-
+ </v-data-table>
 </template>
 <script>
 import API_ENDPOINT from "../../api/GetEndPoint.js";
-import  Player from '../common/Player';        
-        
-
+import  Player from '../common/Player';
 export default {
      props:['AlbumId'],
      inject: ['myPlaylists','myAlbums'],      
@@ -108,21 +94,16 @@ export default {
                   {text:'Artist',value:'artistName'},
                   {text:'Lenght',value:'trackTimeMillis'},
                   {text:'Play',value:'action',sortable:false},
-
               ],
-      trackList: [      
-        
+      trackList: [
       ],
-     
        users: {
               name: "a19-team28",
               email: "a19-team28@team28.com",
               password: "19Team28"
             }
-      
       };
   },
-
   components:{Player} ,
    methods: {
     millisToMinutes: function(timeMillis) {
@@ -137,22 +118,19 @@ export default {
     {
      this.trackItem = Object.assign({},item);
      this.dialog=true ; 
-    }
-    ,
+    },
    
-      close () {
+    close () {
         this.dialog = false;
         setTimeout(() => {
-          this.trackItem = {trackName:'',previewUrl:''} ; //Object.assign({}, this.defaultTrackItem)
+          this.trackItem = {trackName:'',previewUrl:''};
          
         }, 300)
       },
        AddToPlayList()
       {
-       
         try
         {
-          
         this.selected.forEach(track=>
           {
 
@@ -203,13 +181,8 @@ export default {
          this.alert=true ;             
          this.messageInfo.color="error" ; 
          this.messageInfo.text=e
-    
-               }       
-       
+       }
       },
-    
- 
-
   },
   async  created() {
          this.myAlbums.getTracksByAlbumsById(API_ENDPOINT,this.AlbumId).then(
@@ -217,32 +190,19 @@ export default {
              let datatrack=response ; 
              if(datatrack.resultCount>0) 
              {
-             this.trackList= datatrack.results ;    
-
+             this.trackList= datatrack.results;
              }
-        } ) ; 
-        
-        //  const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
-        //         this.playlists = playlistsT;
-        //         this.tracks = tracks
+        });
 
-             const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
-                this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
-                this.tracks = tracks
+     const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
+        this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
+        this.tracks = tracks;
         
        this.playlists.forEach(el=>
        {
-        
          const itemS={text:el.name,value:el.id} ; 
-         this.dataItemsSelect.push(itemS) ; 
-        
+         this.dataItemsSelect.push(itemS) ;
        })
-
-      // this.dataItemsSelect = this.dataItemsSelect.filter(em=>em.email='a19-team28@team28.com');
-            
-               // this.playlists = playlistsT;
-              
   }
-    
 }
 </script>

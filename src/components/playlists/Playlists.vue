@@ -3,26 +3,26 @@
         <v-container>
             <h4  v-if="playlists.length ===0"  class="mb-2"> Please wait a few seconds loading....</h4>
             <v-progress-linear
-                    indeterminate
-                    color="green darken-2"
-                    v-if="playlists.length ===0"
-                    class="mb-2"
+                indeterminate
+                color="green darken-2"
+                v-if="playlists.length ===0"
+                class="mb-2"
             >
             </v-progress-linear>
             <v-data-table
-                    :headers="headers"
-                    :items="playlists"
-                    item-key="playlists.id"
-                    sort-by="calories"
-                    class="elevation-1"
+                :headers="headers"
+                :items="playlists"
+                item-key="playlists.id"
+                sort-by="calories"
+                class="elevation-1"
             >
                 <template v-slot:top>
                     <v-toolbar flat color="white">
                         <v-toolbar-title>All Playlists</v-toolbar-title>
                         <v-divider
-                                class="mx-4"
-                                inset
-                                vertical
+                            class="mx-4"
+                            inset
+                            vertical
                         ></v-divider>
                         <v-spacer></v-spacer>
                         <v-dialog v-model="dialog" max-width="500px">
@@ -37,10 +37,10 @@
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="addPlaylist.name" label="Playlist Name"></v-text-field>
+                                                <v-text-field v-model="addPlaylist.name" label="Playlist Name" type="text"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="addPlaylist.owner" label="Owner Email" type="email"></v-text-field>
+                                                <v-text-field v-model="addPlaylist.owner" label="Owner Email" type="email" disabled></v-text-field>
                                             </v-col>
                                         </v-row>
                                     </v-container>
@@ -61,13 +61,13 @@
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="editPlaylist.name" label="Playlist Name"></v-text-field>
+                                                <v-text-field v-model="editPlaylist.name" label="Playlist Name" type="text"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="editPlaylist.email" label="Owner Email" type="email"></v-text-field>
+                                                <v-text-field v-model="editPlaylist.email" label="Owner Email" type="email" disabled></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="editPlaylist.id" label="Id"></v-text-field>
+                                                <v-text-field v-model="editPlaylist.id" label="Id" disabled></v-text-field>
                                             </v-col>
                                         </v-row>
                                     </v-container>
@@ -88,32 +88,32 @@
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="getPlaylist.id" label="Playlist Id" type="text"></v-text-field>
+                                                <v-text-field v-model="getPlaylist.id" label="Playlist Id" type="text" disabled></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="getPlaylist.email" label="Owner Email" type="email"></v-text-field>
+                                                <v-text-field v-model="getPlaylist.email" label="Owner Email" type="email" disabled></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="getPlaylist.ownerName" label="Owner Name" type="text"></v-text-field>
+                                                <v-text-field v-model="getPlaylist.ownerName" label="Owner Name" type="text" disabled></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="getPlaylist.ownerId" label="Owner Id" type="text"></v-text-field>
+                                                <v-text-field v-model="getPlaylist.ownerId" label="Owner Id" type="text" disabled></v-text-field>
                                             </v-col>
                                             <v-col cols="12">
                                                 <v-data-table
-                                                        :headers="headersTrack"
-                                                        :items="myTracks"
-                                                        item-key="tracks.id"
-                                                        sort-by="calories"
-                                                        class="elevation-1"
+                                                    :headers="headersTrack"
+                                                    :items="myTracks"
+                                                    item-key="tracks.id"
+                                                    sort-by="calories"
+                                                    class="elevation-1"
                                                 >
                                                     <template v-slot:top>
                                                         <v-toolbar flat color="white">
                                                             <v-toolbar-title>Tracks</v-toolbar-title>
                                                             <v-divider
-                                                                    class="mx-4"
-                                                                    inset
-                                                                    vertical
+                                                                class="mx-4"
+                                                                inset
+                                                                vertical
                                                             ></v-divider>
                                                             <v-spacer></v-spacer>
                                                         </v-toolbar>
@@ -137,22 +137,22 @@
                 </template>
                 <template v-slot:item.action="{ item }">
                     <v-icon
-                            small
-                            class="mr-2"
-                            @click="editPlaylists(item)"
+                        small
+                        class="mr-2"
+                        @click="editPlaylists(item)"
                     >
                         edit
                     </v-icon>
                     <v-icon
-                            small
-                            class="mr-2"
-                            @click="deleteItem(item.id)"
+                        small
+                        class="mr-2"
+                        @click="deleteItem(item.id)"
                     >
                         delete
                     </v-icon>
                     <v-icon
-                            small
-                            @click="getPlaylistId(item)"
+                        small
+                        @click="getPlaylistId(item)"
                     >
                         mdi-checkbox-marked-circle
                     </v-icon>
@@ -162,28 +162,27 @@
                 </template>
             </v-data-table>
         </v-container>
-        {{dataReturned}}
         <v-container>
             <v-data-table
-                    :headers="headersTrack"
-                    :items="myTracks"
-                    :item-key="myTracks.trackId"
-                    class="elevation-1"
+                :headers="headersTrack"
+                :items="myTracks"
+                :item-key="myTracks.playlistIdTrack"
+                class="elevation-1"
             >
                 <template v-slot:top>
                     <v-toolbar flat color="white">
                         <v-toolbar-title>All Tracks Per Playlist</v-toolbar-title>
                         <v-divider
-                                class="mx-4"
-                                inset
-                                vertical
+                            class="mx-4"
+                            inset
+                            vertical
                         ></v-divider>
                     </v-toolbar>
                 </template>
                 <template v-slot:item.action="{ item }">
                     <v-icon
-                            small
-                            @click="deleteItemTrack(item)"
+                        small
+                        @click="deleteItemTrack(item)"
                     >
                         delete
                     </v-icon>
@@ -196,11 +195,11 @@
     </div>
 </template>
 <script>
+    import API_ENDPOINT from "../../api/GetEndPoint.js";
     export default {
         name: "Playlists",
         inject: ['myPlaylists'],
         data: () => ({
-            url: 'https://ubeat.herokuapp.com/unsecure/',
             users: {
               name: "a19-team28",
               email: "a19-team28@team28.com",
@@ -278,11 +277,9 @@
                 val || this.close()
             },
         },
-
         async created(){
             try{
-                //this.myPlaylists.getPlaylists(this.url).then(data => this.playlists = Object.keys(data).map((k) => data[k]));
-                const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(this.url);
+                const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
                 this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
                 this.tracks = tracks
             }catch(e){
@@ -295,9 +292,8 @@
         methods: {
             editPlaylists (playlistId, name) {
                 try{
-                    //const playlistIndex = this.playlists.findIndex(singlePlaylist => singlePlaylist.id === playlistId);
                     const index = this.playlists.indexOf(playlistId);
-                    this.myPlaylists.modifyPlaylistsById(this.url, playlistId, name).then( () => {
+                    this.myPlaylists.modifyPlaylistsById(API_ENDPOINT, playlistId, name).then( () => {
                         this.editPlaylist.name = this.playlists[index].name;
                         this.editPlaylist.id = this.playlists[index].id;
                         this.editPlaylist.email = this.playlists[index].owner.email;
@@ -308,29 +304,22 @@
                 this.editDelete = true
             },
             addPlaylists() {
-
-                //const {playlistsT} = this.myPlaylists.createPlaylists(this.url, this.addPlaylist);
-                //this.myPlaylists.createPlaylists(this.url, this.addPlaylist);
-                ///this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
-                this.myPlaylists.createPlaylists(this.url, this.addPlaylist).then(data => {
+                this.myPlaylists.createPlaylists(API_ENDPOINT, this.addPlaylist).then(data => {
                     this.playlists.push(data)
                 });
                 this.close()
-
             },
 
             getPlaylistId (playlistId) {
                 try{
-                    //const playlistIndex = this.playlists.findIndex(singlePlaylist => singlePlaylist.id === playlistId);
                     const index = this.playlists.indexOf(playlistId);
-                    this.myPlaylists.getPlaylistsById(this.url, playlistId.id).then( () => {
+                    this.myPlaylists.getPlaylistsById(API_ENDPOINT, playlistId.id).then( () => {
                             this.getPlaylist.ownerName = this.playlists[index].owner.name;
                             this.getPlaylist.email = this.playlists[index].owner.email;
                             this.getPlaylist.id = this.playlists[index].id;
                             this.getPlaylist.ownerId = this.playlists[index].owner.id;
                             this.getPlaylist.track = this.playlists[index].tracks;
                     });
-                    this.$router.push('/playlists/1')
                 }catch(e){
                     alert(e)
                 }
@@ -358,7 +347,7 @@
             modifyPlaylists (playlistId, newName) {
                 try{
                     const playlistIndex = this.playlists.findIndex(singlePlaylist => singlePlaylist.id === playlistId);
-                    this.myPlaylists.modifyPlaylistsById(this.url, playlistId, newName).then( () => {
+                    this.myPlaylists.modifyPlaylistsById(API_ENDPOINT, playlistId, newName).then( () => {
                         this.playlists[playlistIndex].name = newName;
                     });
                 }catch(e){
@@ -375,7 +364,6 @@
                         this.playlistIdTrack.id = element.id;
                         this.myTracks = arrayTrack.map((eachData) => Object.assign(this.playlistIdTrack, eachData))
                     }
-
                 }
             },
             deleteItemTrack (playlistId) {
@@ -388,7 +376,6 @@
                     alert(e)
                 }
             },
-
         },
     }
 </script>

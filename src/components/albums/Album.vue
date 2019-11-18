@@ -4,7 +4,7 @@
       <div class="albumDataContainer">
         <div class="albumImageContainer">
           <img
-            v-bind:src="albumData.artworkUrl100"
+            v-bind:src="albumData.artworkUrl100" alt="album"
           />
           <a
             v-bind:href="albumData.collectionViewUrl"
@@ -35,10 +35,8 @@
           </table>
         </div>
       </div>
-      <div class="albumTracksContainer">        
-      
+      <div class="albumTracksContainer">
         <AlbumTracks :AlbumId="AlbumId" ></AlbumTracks>
-        
       </div>
     </div>
   </div>
@@ -46,9 +44,7 @@
 
 <script>
 import AlbumTracks from '../albums/AlbumTracks.vue';
-import API_ENDPOINT from "../../api/GetEndPoint.js";  
-
-
+import API_ENDPOINT from "../../api/GetEndPoint.js";
 export default {
     components:{AlbumTracks},
     inject: ['myAlbums'] ,       
@@ -56,10 +52,8 @@ export default {
     return {
       routeArtist : '' ,   
       AlbumId:this.$route.params.id , 
-      albumData: {                 
-
-      } 
-      
+      albumData: {
+      }
     };
   },
   computed:{
@@ -67,31 +61,22 @@ export default {
       {
        return '/artist/'+this.albumData.artistId
       }
-    
   },
    methods: {    
     convertDate(inputFormat) {
   function pad(s) { return (s < 10) ? '0' + s : s; }
-  var d = new Date(inputFormat)
+  let d = new Date(inputFormat);
   return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('-')
 }
-
   },
   created() {
-                  this.myAlbums.getAlbumsById(API_ENDPOINT,this.AlbumId).then(
-              response=>{
-                 
-                  let dataAlbum=response ; 
-                  if(dataAlbum.resultCount!=0)                  {
-                  
-                      this.albumData = dataAlbum.results[0] ;
-
-                  }
-
-                
-
-
-              })
+        this.myAlbums.getAlbumsById(API_ENDPOINT,this.AlbumId).then(
+    response => {
+        let dataAlbum=response ;
+        if(dataAlbum.resultCount!==0)                  {
+            this.albumData = dataAlbum.results[0] ;
+        }
+     })
   }  
 };
 </script>
@@ -102,7 +87,7 @@ export default {
 }
 
 .container {
-  margin-top: 0px;
+  margin-top: 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -149,7 +134,7 @@ export default {
   border-spacing: 20px 3px;
 }
 .albumTableDescription > td {
-  padding-left: 30px 0;
+  padding-left: 30px;
 }
 
 /* Tracks */

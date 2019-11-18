@@ -24,7 +24,6 @@
 <script>
     import cardArtist from "./cardArtist";
     import cardAlbum from "./cardAlbum";
-
     export default {
         name: "Home",
         components: {
@@ -44,14 +43,12 @@
             {ArtistId:116851,color:'#c51162',icon:'mdi-music'},
             {ArtistId:3996865,color:'#4a149c',icon:'mdi-music'}
         ]
-
         }),
         methods:{
              OnDisplayAlbum(id)
              {
                  this.$router.push('/Album/'+id)
-             } ,
-
+             },
              OnDisplayArtist(id){
                  this.$router.push('/artist/'+id) ;
              }

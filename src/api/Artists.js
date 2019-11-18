@@ -5,8 +5,6 @@ class Artists {
             method: 'GET'
         });
         const json = await response.json() ;
-        // const json = await response.json();
-        // return json ; 
         return {
              result: json.results.map((eachElement) => Object.assign({resultCount:json.resultCount}, eachElement))
          }

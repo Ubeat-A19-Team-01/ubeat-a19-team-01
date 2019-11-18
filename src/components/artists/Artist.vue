@@ -4,7 +4,6 @@
       <h1 class="artistName">{{artist.artistName}}</h1>
       <div class="artistDataContainer">
         <div class="artistImageContainer">
-         
           <a
             :href="artist.artistLinkUrl"
             style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?kind=artist&bubble=apple_music) no-repeat;width:158px;height:45px;"
@@ -15,8 +14,7 @@
                <tr>
               <td>Genre</td>
               <td>{{artist.primaryGenreName}}</td>
-            </tr>        
-                       
+            </tr>
           </table>
         </div>
       </div>  
@@ -27,7 +25,6 @@
               <app-card-album :id=album.collectionId  v-on:DisplayAlbum="OnDisplayAlbum(album.collectionId)">                 
               </app-card-album>
           </li>
-          
         </ul>
       </div>
     </div>
@@ -43,7 +40,6 @@
         components:{ appCardAlbum: cardAlbum} , 
         data: () => ({
             url:API_ENDPOINT ,
-           // id: this.$route.params.id ,
             artist: {artistName:'',artistLinkUrl:'',primaryGenreName:''},
             albums:[]             
         }),
@@ -53,25 +49,16 @@
                  this.$router.push('/Album/'+id)
              } 
         },
-
          async created(){
             try{
                 const {result} = await this.myArtists.getArtistsById(this.url, this.$route.params.id);
                 this.artist = {artistName:result[0].artistName ,artistLinkUrl:result[0].artistLinkUrl,primaryGenreName:result[0].primaryGenreName }
-
-              
                const dataAlbum =await this.myArtists.getAlbumsByArtistsId(this.url, this.$route.params.id)
-                this.albums=dataAlbum.result.slice(0,3) ; 
-
-
-
+                this.albums=dataAlbum.result.slice(0,3) ;
             }catch(e){
                 alert(e)
             }
         }
-       
-       
-    
     }
 </script>
 
@@ -132,16 +119,6 @@
 .artistTableInfo > table > tr > td {
   padding-left: 15px;
 }
-
-.artistMbLink {
-  color: black;
-  text-shadow: 1px 1px 3px gray;
-}
-
-.artistMbLink:hover {
-  color: crimson;
-}
-
 .artistAlbumsTitle {
   font-size: 2em;
   padding-top: 20px;

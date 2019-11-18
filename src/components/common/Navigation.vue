@@ -1,15 +1,15 @@
 <template>
     <div id="inspire">
         <v-app-bar
-                :clipped-left="$vuetify.breakpoint.lgAndUp"
-                app
-                color="blue darken-3"
-                dark
-                height="60"
+            :clipped-left="$vuetify.breakpoint.lgAndUp"
+            app
+            color="blue darken-3"
+            dark
+            height="60"
         >
             <v-toolbar-title
-                    style="width: 150px; cursor: pointer"
-                    class="ml-0 pl-4"
+                style="width: 150px; cursor: pointer"
+                class="ml-0 pl-4"
             >
                 <span @click="goHome"><v-icon>home</v-icon> Ubeat</span>
             </v-toolbar-title>
@@ -22,20 +22,20 @@
             </v-list>
             <v-spacer></v-spacer>
             <v-text-field
-                    flat
-                    solo-inverted
-                    hide-details
-                    prepend-inner-icon="search"
-                    label="Search for artists or playlists"
-                    class="hidden-xs-and-down hidden-xs-only"
+                flat
+                solo-inverted
+                hide-details
+                prepend-inner-icon="search"
+                label="Search for artists or playlists"
+                class="hidden-xs-and-down hidden-xs-only"
             ></v-text-field>
             <v-spacer></v-spacer>
             <v-menu open-on-hover bottom offset-y>
                 <template v-slot:activator="{ on }">
                     <v-btn
-                            icon
-                            large
-                            v-on="on"
+                        icon
+                        large
+                        v-on="on"
 
                     >
                         <v-avatar
@@ -71,19 +71,18 @@
         <v-navigation-drawer v-model="drawer" v-if="drawer !== false" class="hidden-sm-and-up mx-1 mt-10" width="auto">
             <v-list color="blue darken-3" dark>
                 <v-list-item
-                        link
+                   link
                 >
                     <v-list-item-title @click="navigateToPlaylists">Playlists</v-list-item-title>
-
                 </v-list-item>
                 <v-divider></v-divider>
                 <v-list-item>
                     <v-text-field
-                            flat
-                            solo-inverted
-                            hide-details
-                            prepend-inner-icon="search"
-                            label="Search for artists or playlists"
+                        flat
+                        solo-inverted
+                        hide-details
+                        prepend-inner-icon="search"
+                        label="Search for artists or playlists"
                     ></v-text-field>
                 </v-list-item>
                 <v-divider></v-divider>
@@ -91,17 +90,17 @@
                     <v-menu open-on-hover bottom offset-y>
                         <template v-slot:activator="{ on }">
                             <v-btn
-                                    icon
-                                    large
-                                    v-on="on"
+                                icon
+                                large
+                                v-on="on"
                             >
                                 <v-avatar
-                                        size="32px"
-                                        item
+                                    size="32px"
+                                    item
                                 >
                                     <v-img
-                                            src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
-                                            alt="User John"
+                                        src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
+                                        alt="User John"
                                     >
                                     </v-img></v-avatar>
                             </v-btn>
