@@ -6,26 +6,32 @@ import Artist from "../components/artists/Artist";
 import Playlists from "../components/playlists/Playlists";
 import Register from '../components/users/register';
 import Login from '../components/users/login'
+import Dashboard from "../components/common/Dashboard";
 
 Vue.use(Router);
 
 export default new Router({
     routes: [
         {
-            path: "/",
+            path: "/register",
             name: "Register",
             component: Register
         },
         {
-            path: "/login",
+            path: "/",
             name: "Login",
             component: Login
         },
         {
             path: "/dashboard",
-            name: "Home",
-            component: Home,
+            name: "Dashboard",
+            component: Dashboard,
             children: [
+                {
+                    path: "",
+                    name: "Home",
+                    component: Home,
+                },
                 {
                     path: "/artist/:id",
                     name: "Artist",

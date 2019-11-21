@@ -1,9 +1,6 @@
 <template>
     <div>
-        <Navigation/>
-        <v-content class="body">
-            <router-view></router-view>
-        </v-content>
+
         <v-container class="body font-weight-bold" v-if="connected === true">
             <v-row align="center" class="mt-10">
                 <h5 class="display-1"> Albums</h5>
@@ -30,13 +27,11 @@
 <script>
     import cardArtist from "./cardArtist";
     import cardAlbum from "./cardAlbum";
-    import Navigation from "../common/Navigation";
     export default {
         name: "Home",
         components: {
             appCardArtist: cardArtist,
             appCardAlbum: cardAlbum,
-            Navigation,
         },
         data: () => ({
             items: [{albumId:929463779 , color:'#952170'},
