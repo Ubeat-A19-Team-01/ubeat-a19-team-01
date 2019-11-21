@@ -52,8 +52,8 @@
          async created(){
             try{
                 const {result} = await this.myArtists.getArtistsById(this.url, this.$route.params.id);
-                this.artist = {artistName:result[0].artistName ,artistLinkUrl:result[0].artistLinkUrl,primaryGenreName:result[0].primaryGenreName }
-               const dataAlbum =await this.myArtists.getAlbumsByArtistsId(this.url, this.$route.params.id)
+                this.artist = {artistName:result[0].artistName ,artistLinkUrl:result[0].artistLinkUrl,primaryGenreName:result[0].primaryGenreName };
+               const dataAlbum =await this.myArtists.getAlbumsByArtistsId(this.url, this.$route.params.id);
                 this.albums=dataAlbum.result.slice(0,3) ;
             }catch(e){
                 alert(e)
