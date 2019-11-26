@@ -20,7 +20,7 @@
                     <v-list-item-title @click="navigateToPlaylists">Playlists</v-list-item-title>
                 </v-list-item>
             </v-list>
-            <v-spacer></v-spacer>
+            <v-spacer/>
             <v-text-field
                 flat
                 solo-inverted
@@ -28,8 +28,8 @@
                 prepend-inner-icon="search"
                 label="Search for artists or playlists"
                 class="hidden-xs-and-down hidden-xs-only"
-            ></v-text-field>
-            <v-spacer></v-spacer>
+            />
+            <v-spacer/>
             <v-menu open-on-hover bottom offset-y>
                 <template v-slot:activator="{ on }">
                     <v-btn
@@ -57,8 +57,8 @@
                             <v-list-item-title>Settings</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
-                    <v-divider></v-divider>
-                    <v-list-item  link>
+                    <v-divider/>
+                    <v-list-item  link @click="logoutUser">
                         <v-list-item-icon><v-icon>logout</v-icon></v-list-item-icon>
                         <v-list-item-content>
                             <v-list-item-title>Sign Out </v-list-item-title>
@@ -66,7 +66,7 @@
                     </v-list-item>
                 </v-list>
             </v-menu>
-            <v-app-bar-nav-icon class="hidden-sm-and-up" @click="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon class="hidden-sm-and-up" @click="drawer = !drawer"/>
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" v-if="drawer !== false" class="hidden-sm-and-up mx-1 mt-10" width="auto">
             <v-list color="blue darken-3" dark>
@@ -75,7 +75,7 @@
                 >
                     <v-list-item-title @click="navigateToPlaylists">Playlists</v-list-item-title>
                 </v-list-item>
-                <v-divider></v-divider>
+                <v-divider/>
                 <v-list-item>
                     <v-text-field
                         flat
@@ -83,9 +83,9 @@
                         hide-details
                         prepend-inner-icon="search"
                         label="Search for artists or playlists"
-                    ></v-text-field>
+                    />
                 </v-list-item>
-                <v-divider></v-divider>
+                <v-divider/>
                 <v-list-item>
                     <v-menu open-on-hover bottom offset-y>
                         <template v-slot:activator="{ on }">
@@ -112,8 +112,8 @@
                                     <v-list-item-title>Settings</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-divider></v-divider>
-                            <v-list-item  link>
+                            <v-divider/>
+                            <v-list-item  link @click="logoutUser">
                                 <v-list-item-icon><v-icon>logout</v-icon></v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>Sign Out </v-list-item-title>
@@ -128,8 +128,10 @@
 </template>
 
 <script>
+
     export default {
         name: 'Navigation',
+        inject: ['myCookie', 'myUsers'],
         data() {
             return {
                 drawer: false,
@@ -140,8 +142,11 @@
                 this.$router.push('/playlists')
             },
             goHome(){
-                this.$router.push('/')
-            }
+                this.$router.push('/dashboard')
+            },
+            logoutUser() {
+                this.$router.push('/');
+            },
         }
     };
 </script>

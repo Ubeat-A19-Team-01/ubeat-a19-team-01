@@ -1,51 +1,45 @@
 class Users {
 
-    signupUsers = async (url, name, email, password) => {
-        const response = await fetch(url + `signup`, {
+    signupUsers = async (url, data) => {
+        const response = await fetch(url + 'signup', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
             },
-            form: {
-                name: name,
-                email: email,
-                password: password
-            }
+            body: JSON.stringify({
+                name: data.name,
+                email: data.email,
+                password: data.password
+            })
         });
         const json = await response.json();
         return {
-            id: id,
+            id: json.id,
             name: json.name,
             email: json.email,
             follows: json.following
         }
     };
 
-    loginUsers = async (url, email, password) => {
+    loginUsers = async (url, data) => {
         const response = await fetch(url + `login`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
             },
-            form: {
-                email: email,
-                password: password
-            }
+            body: JSON.stringify({
+                email: data.email,
+                password: data.password
+            })
         });
-        const json = await response.json();
-        return {
-            id: id,
-            name: json.name,
-            email: json.email,
-            token: json.token
-
-        }
+        return await response.json()
     };
 
     logoutUsers = async (url) => {
-        const response = await fetch(url + `logout`, {
+        const response = await fetch(url + 'logout', {
             method: 'POST'
         });
+        alert(await response.json());
         return await response.json();
     };
 
@@ -59,7 +53,7 @@ class Users {
         });
         const json = await response.json();
         return {
-            id: id,
+            id: json.id,
             name: json.name,
             email: json.email
         }

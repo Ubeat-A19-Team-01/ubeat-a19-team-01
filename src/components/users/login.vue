@@ -14,6 +14,10 @@
                         sm="8"
                         md="4"
                     >
+                        <v-alert type="error" v-if="loginError === true" class="mb-3">
+                            Your email and password are not correct or empty. Please try again.
+                        </v-alert>
+                        {{userInfo.name}}
                         <v-card class="elevation-12">
                             <v-toolbar
                                 color="primary"
@@ -26,10 +30,11 @@
                             <v-card-text>
                                 <v-form>
                                     <v-text-field
-                                        label="Username"
+                                        label="Email Address"
                                         name="login"
                                         prepend-icon="person"
-                                        type="text"
+                                        type="email"
+                                        v-model="userLogin.email"
                                     />
 
                                     <v-text-field
@@ -38,12 +43,14 @@
                                         name="password"
                                         prepend-icon="lock"
                                         type="password"
+                                        v-model="userLogin.password"
                                     />
                                 </v-form>
                             </v-card-text>
                             <v-card-actions>
+                                <v-btn text to="/register"  color="primary">Register</v-btn>
                                 <v-spacer />
-                                <v-btn color="primary">Login</v-btn>
+                                <v-btn  color="primary" class="mr-3 mb-3" @click="loginUser">Login</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-col>
@@ -54,9 +61,58 @@
 </template>
 
 <script>
+    import API_ENDPOINT_SECURE from "../../api/GetSecureEndPoint";
+
     export default {
         props: {
             source: String,
         },
+        inject: ['myCookie', 'myUsers'],
+        data: () => ({
+          loginError: false,
+          userLogin: {
+            email: '',
+            password: ''
+        },
+           userInfo: {
+              name: ''
+           }
+        }),
+        methods: {
+            loginUser() {
+                try {
+                    if(this.userLogin.email === '' || this.userLogin.password === ''){
+                        this.checkCookie("angelo.com");
+                        this.loginError = true;
+                        setTimeout(() =>{ this.loginError = false}, 3000);
+                        this.$router.push('/')
+                    } else{
+                        this.myUsers.loginUsers(API_ENDPOINT_SECURE, this.userLogin).then(data => {
+                            if(this.userLogin.email === data.email){
+                                this.myCookie.set(data.name, data.token);
+                                this.userInfo.name = data.name;
+                                //alert(this.userInfo.name);
+                                this.checkCookie(data.name);
+                                this.$router.push('/dashboard')
+                            }
+                        });
+                        this.$router.push('/');
+                        this.loginError = true;
+                        setTimeout(() =>{ this.loginError = false}, 3000);
+                    }
+                } catch(err){
+                    alert(err)
+                }
+            },
+
+            checkCookie(name){
+                let userCookie = this.myCookie.get(name);
+                if(!userCookie){
+                    this.$router.push('/')
+                } else {
+                    this.$router.push('/dashboard')
+                }
+            }
+        }
     }
 </script>

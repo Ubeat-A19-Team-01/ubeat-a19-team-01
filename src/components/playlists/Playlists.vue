@@ -23,8 +23,8 @@
                             class="mx-4"
                             inset
                             vertical
-                        ></v-divider>
-                        <v-spacer></v-spacer>
+                        />
+                        <v-spacer/>
                         <v-dialog v-model="dialog" max-width="500px">
                             <template v-slot:activator="{ on }">
                                 <v-btn color="primary" dark class="mb-2" v-on="on">Add Playlist</v-btn>
@@ -37,16 +37,16 @@
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="addPlaylist.name" label="Playlist Name" type="text"></v-text-field>
+                                                <v-text-field v-model="addPlaylist.name" label="Playlist Name" type="text"/>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="addPlaylist.owner" label="Owner Email" type="email" disabled></v-text-field>
+                                                <v-text-field v-model="addPlaylist.owner" label="Owner Email" type="email" disabled/>
                                             </v-col>
                                         </v-row>
                                     </v-container>
                                 </v-card-text>
                                 <v-card-actions>
-                                    <v-spacer></v-spacer>
+                                    <v-spacer/>
                                     <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
                                     <v-btn color="primary" @click="addPlaylists">Add</v-btn>
                                 </v-card-actions>
@@ -61,13 +61,13 @@
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="editPlaylist.name" label="Playlist Name" type="text"></v-text-field>
+                                                <v-text-field v-model="editPlaylist.name" label="Playlist Name" type="text"/>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="editPlaylist.email" label="Owner Email" type="email" disabled></v-text-field>
+                                                <v-text-field v-model="editPlaylist.email" label="Owner Email" type="email" disabled/>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="editPlaylist.id" label="Id" disabled></v-text-field>
+                                                <v-text-field v-model="editPlaylist.id" label="Id" disabled/>
                                             </v-col>
                                         </v-row>
                                     </v-container>
@@ -88,16 +88,16 @@
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="getPlaylist.id" label="Playlist Id" type="text" disabled></v-text-field>
+                                                <v-text-field v-model="getPlaylist.id" label="Playlist Id" type="text" disabled/>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="getPlaylist.email" label="Owner Email" type="email" disabled></v-text-field>
+                                                <v-text-field v-model="getPlaylist.email" label="Owner Email" type="email" disabled/>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="getPlaylist.ownerName" label="Owner Name" type="text" disabled></v-text-field>
+                                                <v-text-field v-model="getPlaylist.ownerName" label="Owner Name" type="text" disabled/>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="getPlaylist.ownerId" label="Owner Id" type="text" disabled></v-text-field>
+                                                <v-text-field v-model="getPlaylist.ownerId" label="Owner Id" type="text" disabled/>
                                             </v-col>
                                             <v-col cols="12">
                                                 <v-data-table
@@ -114,8 +114,8 @@
                                                                 class="mx-4"
                                                                 inset
                                                                 vertical
-                                                            ></v-divider>
-                                                            <v-spacer></v-spacer>
+                                                            />
+                                                            <v-spacer/>
                                                         </v-toolbar>
                                                     </template>
                                                     <template v-slot:no-data>
@@ -127,7 +127,7 @@
                                     </v-container>
                                 </v-card-text>
                                 <v-card-actions>
-                                    <v-spacer></v-spacer>
+                                    <v-spacer/>
                                     <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
                                     <v-btn color="primary"  @click="close">Close</v-btn>
                                 </v-card-actions>
@@ -176,7 +176,7 @@
                             class="mx-4"
                             inset
                             vertical
-                        ></v-divider>
+                        />
                     </v-toolbar>
                 </template>
                 <template v-slot:item.action="{ item }">
@@ -287,8 +287,6 @@
             }
             this.extractTracks()
         },
-
-
         methods: {
             editPlaylists (playlistId, name) {
                 try{
