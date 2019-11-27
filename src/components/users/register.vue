@@ -1,6 +1,5 @@
 <template>
     <v-app id="inspire">
-        {{name}}
         <v-content>
             <v-container
                 class="fill-height"
@@ -40,7 +39,6 @@
                                         type="email"
                                         v-model="userRegistration.email"
                                     />
-
                                     <v-text-field
                                         id="password"
                                         label="Password"

@@ -17,7 +17,6 @@
                         <v-alert type="error" v-if="loginError === true" class="mb-3">
                             Your email and password are not correct or empty. Please try again.
                         </v-alert>
-                        {{userInfo.name}}
                         <v-card class="elevation-12">
                             <v-toolbar
                                 color="primary"
@@ -91,7 +90,6 @@
                             if(this.userLogin.email === data.email){
                                 this.myCookie.set(data.name, data.token);
                                 this.userInfo.name = data.name;
-                                //alert(this.userInfo.name);
                                 this.checkCookie(data.name);
                                 this.$router.push('/dashboard')
                             }
