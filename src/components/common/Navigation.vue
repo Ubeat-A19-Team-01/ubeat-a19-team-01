@@ -50,11 +50,11 @@
                             </v-img></v-avatar>
                     </v-btn>
                 </template>
-                <v-list dense>
-                    <v-list-item  link>
+                <v-list>
+                    <v-list-item  link @click="goToUserProfile">
                         <v-list-item-icon><v-icon>settings</v-icon></v-list-item-icon>
                         <v-list-item-content>
-                            <v-list-item-title>Settings</v-list-item-title>
+                            <v-list-item-title>Profile</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                     <v-divider/>
@@ -106,10 +106,10 @@
                             </v-btn>
                         </template>
                         <v-list dense>
-                            <v-list-item  link>
+                            <v-list-item  link @click="goToUserProfile">
                                 <v-list-item-icon><v-icon>settings</v-icon></v-list-item-icon>
                                 <v-list-item-content>
-                                    <v-list-item-title>Settings</v-list-item-title>
+                                    <v-list-item-title>Profile</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-divider/>
@@ -147,6 +147,9 @@
             logoutUser() {
                 this.$router.push('/');
             },
+            goToUserProfile(){
+                this.$router.push('/userProfile');
+            }
         }
     };
 </script>

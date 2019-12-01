@@ -7,6 +7,7 @@ import Playlists from "../components/playlists/Playlists";
 import Register from '../components/users/register';
 import Login from '../components/users/login'
 import Dashboard from "../components/common/Dashboard";
+import UserProfile from '../components/users/UserProfile'
 
 Vue.use(Router);
 
@@ -46,6 +47,10 @@ export default new Router({
                 {
                     path: "/playlists",
                     component: Playlists,
+                },
+                {
+                    path: "/userProfile",
+                    component: UserProfile,
                 },
             ]
         },
