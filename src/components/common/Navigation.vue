@@ -16,19 +16,34 @@
             <v-list  color="blue darken-3" dark flat max-height="59" class="hidden-xs-only">
                 <v-list-item
                   link
-                >
-                    <v-list-item-title @click="navigateToPlaylists">Playlists</v-list-item-title>
+                > <v-list-item-title @click="navigateToPlaylists">Playlists</v-list-item-title>
                 </v-list-item>
             </v-list>
             <v-spacer/>
             <v-text-field
                 flat
                 solo-inverted
-                hide-details
-                prepend-inner-icon="search"
+                hide-details             
                 label="Search for artists or playlists"
                 class="hidden-xs-and-down hidden-xs-only"
-            />
+                v-model="ItemToSearch"
+            >
+            <template slot="prepend">
+             <v-select :items="items" 
+             item-text="name"
+             item-value="id"
+             v-model="SelectedItem"          
+          solo-inverted flat  hide-details  dense            
+          >
+
+          </v-select>
+           </template>
+           <template slot="append" v-if="ItemToSearch!=''">                       
+           <v-btn flat hide-details solo-inverted :to="routePath"  >
+             <v-icon>search</v-icon>
+           </v-btn>
+           </template> 
+            </v-text-field>
             <v-spacer/>
             <v-menu open-on-hover bottom offset-y>
                 <template v-slot:activator="{ on }">
@@ -135,8 +150,51 @@
         data() {
             return {
                 drawer: false,
+                 SelectedItem:[],
+                 ItemToSearch:'' , 
+                 items:['Alls','albums','artists','tracks','users'],
+                        
+
             };
         },
+
+        computed : {
+            routePath: function()
+            {
+                let routePath  ; 
+                localStorage.setItem('searchtype',this.SelectedItem)
+                switch(this.SelectedItem) {
+                 case "Alls":
+                
+                 routePath = '/search/'+this.ItemToSearch ; 
+                 break;
+                 case "albums":
+                 routePath  = '/search/albums/'+this.ItemToSearch ;    
+                
+                 break;
+                 case "artists":
+                 routePath = '/search/artists/'+this.ItemToSearch ;  
+                
+                 break;
+                 case "tracks":
+                    routePath = '/search/tracks/'+this.ItemToSearch;
+                
+                 break;
+                 case "users":
+                routePath ='/search/users/'+this.ItemToSearch ; 
+                
+                 break;
+                 default:
+                routePath  = '/search/'+this.ItemToSearch  ; 
+                
+                }
+                return  routePath ;               
+
+            }
+          
+        }
+        ,
+
         methods:{
             navigateToPlaylists(){
                 this.$router.push('/playlists')
@@ -149,9 +207,65 @@
             },
             goToUserProfile(){
                 this.$router.push('/userProfile');
+            },
+            // Search(){
+                
+            //        let token = this.myCookie.get(this.currentUser) ; 
+     
+            //   this.mySearch.Search(API_ENDPOINT,this.SelectedItem,this.ItemToSearch,token).then(
+            //       response =>{
+            //             //this.searchResult = response ; 
+            //             localStorage.setItem('searchResult',JSON.stringify(response));
+
+            //       }) ; 
+
+            
+            //  this.$router.push('/search') ; 
+
+           // },
+             
+  
+        //    navigateToSearchs()
+        //    {
+
+        //          let routePath  ;   
+        //           localStorage.setItem('searchtype',this.SelectedItem)
+        //         switch(this.SelectedItem) {
+        //          case "Alls":
+                
+        //          routePath = '/search/'+this.ItemToSearch ; 
+        //          break;
+        //          case "albums":
+        //          routePath  = '/search/albums/'+this.ItemToSearch ;    
+                
+        //          break;
+        //          case "artists":
+        //          routePath = '/search/artists/'+this.ItemToSearch ;  
+                
+        //          break;
+        //          case "tracks":
+        //             routePath = '/search/tracks/'+this.ItemToSearch;
+                
+        //          break;
+        //          case "users":
+        //         routePath ='/search/users/'+this.ItemToSearch ; 
+                
+        //          break;
+        //          default:
+        //         routePath  = '/search/'+this.ItemToSearch  ; 
+                
+        //         }
+        //         //return  routePath ; 
+        //           this.$router.push(routePath) ;            
+
+
+        //     }
+           
+
+               
             }
-        }
-    };
+        
+    }
 </script>
 <style scoped>
 

@@ -7,9 +7,11 @@ import Artists from "./api/Artists";
 import Albums from './api/Albums';
 import Users from './api/users'
 import CookieUtil from './api/CookieUtil'
+import Search from './api/search/index'
  
 
 Vue.config.productionTip = false;
+
 
 new Vue({
   vuetify,
@@ -19,7 +21,8 @@ new Vue({
     myArtists: new Artists(),
     myAlbums: new Albums(),
     myUsers: new Users(),
-    myCookie: CookieUtil
+    myCookie: CookieUtil,
+    mySearch:new Search() 
   }),
   render: h => h(App)
 }).$mount('#app');

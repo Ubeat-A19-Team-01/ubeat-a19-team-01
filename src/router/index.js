@@ -7,7 +7,8 @@ import Playlists from "../components/playlists/Playlists";
 import Register from '../components/users/register';
 import Login from '../components/users/login'
 import Dashboard from "../components/common/Dashboard";
-import UserProfile from '../components/users/UserProfile'
+import UserProfile from '../components/users/UserProfile' ; 
+import Search from '../components/searchs/Search'; 
 
 Vue.use(Router);
 
@@ -52,6 +53,38 @@ export default new Router({
                     path: "/userProfile",
                     component: UserProfile,
                 },
+
+                {
+                    path: "/search/:name",
+                    component: Search,
+                    props:true
+                }, 
+                
+                {
+                    path: "/search/albums/:name",
+                    component: Search,
+                    props:true
+                }, 
+                {
+                    path: "/search/artists/:name",
+                    component: Search,
+                    props:true
+                },                  
+                {
+                    path: "/search/users/:name",
+                    component: Search,
+                    props:true
+                }, 
+
+                {
+                    path: "/search/tracks/:name",
+                    component: Search,
+                    props:true
+                }, 
+                
+
+
+
             ]
         },
     ]
