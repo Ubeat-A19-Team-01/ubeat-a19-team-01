@@ -1,11 +1,15 @@
 <template>
- <GlobalSearch :searchResult="searchResult" />
+<div>
+ <GlobalSearch :searchResult="searchResult" v-if="searchtype=='Alls'" />
+ <SpecificSearch :searchResult="searchResult" v-if="searchtype!='Alls'" /> 
+</div>
 </template>
 <script>
 import API_ENDPOINT from "../../api/GetEndPoint.js";  
-import GlobalSearch from "../../components/searchs/GlobalSearch"
+import GlobalSearch from "../searchs/GlobalSearch"
+import SpecificSearch from "../searchs/SpecificSearch"
 export default {      
-      components:{GlobalSearch}   ,
+      components:{GlobalSearch ,SpecificSearch}   ,
       inject:['myCookie','mySearch'],
       data() {
             return {                              
