@@ -45,7 +45,7 @@
            </template> 
             </v-text-field>
             <v-spacer/>
-            <v-menu open-on-hover bottom offset-y>
+            <v-menu open-on-click bottom offset-y>
                 <template v-slot:activator="{ on }">
                     <v-btn
                         icon
@@ -57,6 +57,7 @@
                             size="32px"
                             item
                             class="hidden-xs-only"
+                            @click="callUnsetCookie"
                         >
                             <v-img
                                 src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
@@ -102,7 +103,7 @@
                 </v-list-item>
                 <v-divider/>
                 <v-list-item>
-                    <v-menu open-on-hover bottom offset-y>
+                    <v-menu open-on-click bottom offset-y>
                         <template v-slot:activator="{ on }">
                             <v-btn
                                 icon
@@ -112,6 +113,7 @@
                                 <v-avatar
                                     size="32px"
                                     item
+                                    @click="callUnsetCookie"
                                 >
                                     <v-img
                                         src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
@@ -146,7 +148,8 @@
 
     export default {
         name: 'Navigation',
-        inject: ['myCookie', 'myUsers'],
+        props: ['logoutUser', 'callUnsetCookie'],
+        inject: ['myCookie', 'myUsers', 'myUserSession'],
         data() {
             return {
                 drawer: false,
@@ -162,7 +165,7 @@
             routePath: function()
             {
                 let routePath  ; 
-                localStorage.setItem('searchtype',this.SelectedItem)
+                localStorage.setItem('searchtype',this.SelectedItem);
                 switch(this.SelectedItem) {
                  case "Alls":
                 
@@ -201,9 +204,6 @@
             },
             goHome(){
                 this.$router.push('/dashboard')
-            },
-            logoutUser() {
-                this.$router.push('/');
             },
             goToUserProfile(){
                 this.$router.push('/userProfile');

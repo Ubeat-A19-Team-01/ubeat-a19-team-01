@@ -10,7 +10,7 @@ class CookieUtil {
                 cookieEnd = document.cookie.length;
             }
 
-            cookieValue = decodeURIComponent(document.cookie.substring((cookieStart+cookieName).length, cookieEnd));
+            cookieValue = decodeURIComponent(document.cookie.substring((cookieStart+cookieName).length-1, cookieEnd));
         }
         return cookieValue;
     }

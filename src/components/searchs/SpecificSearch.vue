@@ -1,23 +1,18 @@
 <template>
     <div>    
             <v-container class="body font-weight-bold">
-            
              <v-row>
                 <v-col cols="12" sm="6" md="3" v-for="item in Results.Albums" :key="item.collectionId">
                   <app-card-album :id="item.collectionId" v-on:DisplayAlbum="OnDisplayAlbum(item.collectionId )">
                   </app-card-album>
                 </v-col>
             </v-row>
-
-           
                <v-row>
                 <v-col cols="12" sm="6" md="3" v-for="item in Results.Artists" :key="item.artistId" >
                     <app-card-artist :id=item.artistId   v-on:DisplayArtist="OnDisplayArtist(item.artistId)" >
                     </app-card-artist>
                 </v-col>
             </v-row>
-                     
-
           <v-row>
                 <v-col cols="12" sm="6" md="3" v-for="item in Results.Tracks" :key="item.trackId">
                     <v-card    color="#385F73" dark >           

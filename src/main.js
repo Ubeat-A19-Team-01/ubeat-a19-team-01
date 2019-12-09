@@ -5,7 +5,7 @@ import router from"./router"
 import PlayLists from "./api/PlayLists";
 import Artists from "./api/Artists";
 import Albums from './api/Albums';
-import Users from './api/users'
+import {Users, UserSession} from './api/users'
 import CookieUtil from './api/CookieUtil'
 import Search from './api/search/index'
  
@@ -21,6 +21,8 @@ new Vue({
     myArtists: new Artists(),
     myAlbums: new Albums(),
     myUsers: new Users(),
+    myUserSession: new UserSession(),
+    eventBus: new Vue(),
     myCookie: CookieUtil,
     mySearch:new Search() 
   }),
