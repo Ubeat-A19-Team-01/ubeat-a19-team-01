@@ -81,24 +81,29 @@
             loginUser() {
                 try {
                     if(this.userLogin.email === '' || this.userLogin.password === ''){
-                        const userName = localStorage.getItem('currentUser');
-                        userName ? this.checkCookie(userName) :
-
                         this.loginError = true;
                         setTimeout(() =>{ this.loginError = false}, 3000);
                         this.$router.push('/');
-                    } else{
+                    } else if(this.userLogin.email !== '' && this.userLogin.password === ''){
+                        const userName = localStorage.getItem('currentUser');
+                        if(userName){
+                            this.checkCookie(userName);
+                            alert(userName)
+                        } else {
+                            this.loginError = true;
+                            setTimeout(() =>{this.loginError = false}, 3000);
+                        }
+                    } else {
                         this.myUsers.loginUsers(API_ENDPOINT_SECURE, this.userLogin).then(data => {
                             if(this.userLogin.email === data.email){
                                 this.myCookie.set(data.name, data.token);
-                               // this.$currentUser=data.name ; 
-                               localStorage.setItem('currentUser', data.name) ; 
+                                // this.$currentUser=data.name ;
+                                localStorage.setItem('currentUser', data.name) ;
                                 this.userInfo.name = data.name;
                                 this.checkCookie(data.name);
                                 this.$router.push('/dashboard')
                             }
                         });
-
                     }
                 } catch(err){
                     alert(err)

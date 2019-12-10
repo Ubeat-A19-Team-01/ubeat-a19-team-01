@@ -280,7 +280,6 @@
         },
         async created(){
             try{
-
                 const userName = localStorage.getItem('currentUser');
                 const userCookie = this.myCookie.get(userName);
                 await this.myUserSession.getTokenInfo(API_ENDPOINT_SECURE, userCookie).then(data => {
@@ -294,8 +293,6 @@
                 const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT, cookie);
                 this.playlists = playlistsT.filter(({owner}) => this.userInfo.email === owner.email);
                 this.tracks = tracks;
-
-
             }catch(e){
                 alert(e)
             }
