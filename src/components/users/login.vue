@@ -81,10 +81,12 @@
             loginUser() {
                 try {
                     if(this.userLogin.email === '' || this.userLogin.password === ''){
-                        this.checkCookie("angelo.com");
+                        const userName = localStorage.getItem('currentUser');
+                        userName ? this.checkCookie(userName) :
+
                         this.loginError = true;
                         setTimeout(() =>{ this.loginError = false}, 3000);
-                        this.$router.push('/')
+                        this.$router.push('/');
                     } else{
                         this.myUsers.loginUsers(API_ENDPOINT_SECURE, this.userLogin).then(data => {
                             if(this.userLogin.email === data.email){
@@ -96,9 +98,7 @@
                                 this.$router.push('/dashboard')
                             }
                         });
-                        this.$router.push('/');
-                        this.loginError = true;
-                        setTimeout(() =>{ this.loginError = false}, 3000);
+
                     }
                 } catch(err){
                     alert(err)
