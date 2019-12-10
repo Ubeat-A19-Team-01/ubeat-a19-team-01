@@ -24,23 +24,25 @@
                 flat
                 solo-inverted
                 hide-details             
-                label="Search for artists or playlists"
-                class="hidden-xs-and-down hidden-xs-only"
+                label="Select item to search about"
+                class="hidden-xs-and-down hidden-xs-only mt-3"
                 v-model="ItemToSearch"
             >
             <template slot="prepend">
-             <v-select :items="items" 
-             item-text="name"
-             item-value="id"
-             v-model="SelectedItem"          
-          solo-inverted flat  hide-details  dense            
-          >
+             <v-select :items="items"
+                placeholder="open to select"
+                 item-text="name"
+                 item-value="id"
+                 v-model="SelectedItem"
+                 solo-inverted flat  hide-details dense
+                 class="mb-2"
+             >
 
-          </v-select>
-           </template>
-           <template slot="append" v-if="ItemToSearch!=''">                       
-           <v-btn flat hide-details solo-inverted :to="routePath"  >
-             <v-icon>search</v-icon>
+              </v-select>
+               </template>
+           <template slot="append" v-if="ItemToSearch!==''">
+           <v-btn flat hide-details solo-inverted :to="routePath"  color="blue darken-3" >
+             <v-icon >search</v-icon>
            </v-btn>
            </template> 
             </v-text-field>
@@ -156,8 +158,6 @@
                  SelectedItem:[],
                  ItemToSearch:'' , 
                  items:['Alls','albums','artists','tracks','users'],
-                        
-
             };
         },
 

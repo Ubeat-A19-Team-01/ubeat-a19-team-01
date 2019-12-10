@@ -23,18 +23,12 @@
         data() {
             return {
                 removeToken: '',
-                userName: 'angelo.com',
             };
-        },
-        created() {
-            this.eventBus.$on('getUserName', () => {
-                //this.userName = this.userRegistration.name;
-                //alert(this.userRegistration.name)
-            })
         },
         methods:{
             logoutUser() {
                 this.deleteCookie(this.removeToken);
+                localStorage.removeItem('currentUser');
                 this.$router.push('/');
             },
             deleteCookie(name){
@@ -42,8 +36,8 @@
             },
             callUnsetCookie(){
                 try {
-                    const userCookie = this.myCookie.get(this.userName);
-                    //alert(userCookie);
+                    const userName = localStorage.getItem('currentUser');
+                    const userCookie = this.myCookie.get(userName);
                     this.myUserSession.getTokenInfo(API_ENDPOINT_SECURE, userCookie).then(data => {
                         this.removeToken = data.name;
                         //alert(data.name)

@@ -195,15 +195,16 @@
     </div>
 </template>
 <script>
-    import API_ENDPOINT from "../../api/GetEndPoint.js";
+    import API_ENDPOINT from "../../api/GetSecureEndPoint.js";
+    import API_ENDPOINT_SECURE from "../../api/GetSecureEndPoint";
+
     export default {
         name: "Playlists",
-        inject: ['myPlaylists'],
+        inject: ['myPlaylists', 'myCookie', 'myUserSession'],
         data: () => ({
-            users: {
-              name: "a19-team28",
-              email: "a19-team28@team28.com",
-              password: "19Team28"
+            userInfo: {
+              name: "",
+              email: "",
             },
             playlists: [],
             tracks: [],
@@ -256,7 +257,7 @@
             ],
             addPlaylist: {
                 name: '',
-                owner: 'a19-team28@team28.com',
+                owner: '',
             },
             editPlaylist: {
                 id: '',
@@ -279,9 +280,22 @@
         },
         async created(){
             try{
-                const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
-                this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
-                this.tracks = tracks
+
+                const userName = localStorage.getItem('currentUser');
+                const userCookie = this.myCookie.get(userName);
+                await this.myUserSession.getTokenInfo(API_ENDPOINT_SECURE, userCookie).then(data => {
+                    this.userInfo.name = data.name;
+                    this.userInfo.email = data.email;
+                    this.addPlaylist.name = data.name;
+                    this.addPlaylist.owner = data.email
+                    //alert(data.name)
+                });
+                const cookie = this.userInfoAndToken();
+                const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT, cookie);
+                this.playlists = playlistsT.filter(({owner}) => this.userInfo.email === owner.email);
+                this.tracks = tracks;
+
+
             }catch(e){
                 alert(e)
             }
@@ -290,8 +304,9 @@
         methods: {
             editPlaylists (playlistId, name) {
                 try{
+                    const cookie = this.userInfoAndToken();
                     const index = this.playlists.indexOf(playlistId);
-                    this.myPlaylists.modifyPlaylistsById(API_ENDPOINT, playlistId, name).then( () => {
+                    this.myPlaylists.modifyPlaylistsById(API_ENDPOINT, playlistId, name, cookie).then( () => {
                         this.editPlaylist.name = this.playlists[index].name;
                         this.editPlaylist.id = this.playlists[index].id;
                         this.editPlaylist.email = this.playlists[index].owner.email;
@@ -302,7 +317,8 @@
                 this.editDelete = true
             },
             addPlaylists() {
-                this.myPlaylists.createPlaylists(API_ENDPOINT, this.addPlaylist).then(data => {
+                const cookie = this.userInfoAndToken();
+                this.myPlaylists.createPlaylists(API_ENDPOINT, this.addPlaylist, cookie).then(data => {
                     this.playlists.push(data)
                 });
                 this.close()
@@ -310,8 +326,9 @@
 
             getPlaylistId (playlistId) {
                 try{
+                    const cookie = this.userInfoAndToken();
                     const index = this.playlists.indexOf(playlistId);
-                    this.myPlaylists.getPlaylistsById(API_ENDPOINT, playlistId.id).then( () => {
+                    this.myPlaylists.getPlaylistsById(API_ENDPOINT, playlistId.id, cookie).then( () => {
                             this.getPlaylist.ownerName = this.playlists[index].owner.name;
                             this.getPlaylist.email = this.playlists[index].owner.email;
                             this.getPlaylist.id = this.playlists[index].id;
@@ -326,8 +343,9 @@
 
             deleteItem (playlistId) {
                 try{
+                    const cookie = this.userInfoAndToken();
                     const playlistIndex = this.playlists.findIndex(singlePlaylist => singlePlaylist.id === playlistId);
-                    this.myPlaylists.deletePlaylistsById(playlistId).then(() => {
+                    this.myPlaylists.deletePlaylistsById(playlistId, cookie).then(() => {
                       this.playlists.splice(playlistIndex, 1)
                     });
                 }catch(e){
@@ -344,8 +362,9 @@
 
             modifyPlaylists (playlistId, newName) {
                 try{
+                    const cookie = this.userInfoAndToken();
                     const playlistIndex = this.playlists.findIndex(singlePlaylist => singlePlaylist.id === playlistId);
-                    this.myPlaylists.modifyPlaylistsById(API_ENDPOINT, playlistId, newName).then( () => {
+                    this.myPlaylists.modifyPlaylistsById(API_ENDPOINT, playlistId, newName, cookie).then( () => {
                         this.playlists[playlistIndex].name = newName;
                     });
                 }catch(e){
@@ -366,14 +385,20 @@
             },
             deleteItemTrack (playlistId) {
                 try{
+                    const cookie = this.userInfoAndToken();
                     const playlistIndex = this.myTracks.findIndex(singlePlaylist => singlePlaylist.trackId === playlistId.trackId);
-                    this.myPlaylists.deletePlaylistsByIdAndTrackId(playlistId.id, playlistId.trackId).then(() => {
+                    this.myPlaylists.deletePlaylistsByIdAndTrackId(playlistId.id, playlistId.trackId, cookie).then(() => {
                         this.myTracks.splice(playlistIndex, 1)
                     });
                 }catch(e){
                     alert(e)
                 }
             },
+            userInfoAndToken(){
+                const userName = localStorage.getItem('currentUser');
+                return this.myCookie.get(userName);
+
+            }
         },
     }
 </script>

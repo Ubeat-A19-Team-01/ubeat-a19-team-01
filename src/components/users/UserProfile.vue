@@ -17,118 +17,38 @@
                         class="mx-auto d-block"
                         size="130"
                     >
-                        <img
+                        <img alt=""
                            src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
                         >
                     </v-avatar>
-                    <v-card-text class="text-xs-center">
-                        <h6 class="category text-gray font-weight-thin mb-3">CEO / CO-FOUNDER</h6>
-                        <h4 class="card-title font-weight-light">Justin Djeumene</h4>
-                        <p class="card-description font-weight-light">Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
-                        <v-btn
-                            color="success"
-                            round
-                            class="font-weight-light"
-                        >Follow</v-btn>
+                    <v-card-text class="text-sm-center">
+                        <h4 class="card-title font-weight-regular"> <b>Name:</b> {{userInfo.name}}</h4>
+                        <h4 class="card-title font-weight-regular"> <b>Email:</b> {{userInfo.email}}</h4>
                     </v-card-text>
-                </material-card>
-            </v-flex>
-            <v-flex
-                    xs12
-                    md6
-            >
-                <material-card
-                        color="green"
-                        title="Edit Profile"
-                        text="Complete your profile"
-                >
-                    <v-form>
-                        <v-container py-0>
-                            <v-layout wrap>
-                                <v-flex
-                                        xs12
-                                        md6
-                                >
-                                    <v-text-field
-                                            class="purple-input"
-                                            label="User Name"
-                                    />
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md6
-                                >
-                                    <v-text-field
-                                            label="Email Address"
-                                            class="purple-input"
-                                    />
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md6
-                                >
-                                    <v-text-field
-                                            label="First Name"
-                                            class="purple-input"
-                                    />
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md6
-                                >
-                                    <v-text-field
-                                            label="Last Name"
-                                            class="purple-input"
-                                    />
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md12
-                                >
-                                    <v-text-field
-                                            label="Adress"
-                                            class="purple-input"
-                                    />
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md4>
-                                    <v-text-field
-                                            label="City"
-                                            class="purple-input"
-                                    />
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md4>
-                                    <v-text-field
-                                            label="Country"
-                                            class="purple-input"
-                                    />
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md4>
-                                    <v-text-field
-                                            class="purple-input"
-                                            label="Postal Code"
-                                            type="number"
-                                    />
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        text-xs-right
-                                >
-                                    <v-btn
-                                            class="mx-0 font-weight-light"
-                                            color="success"
-                                    >
-                                        Update Profile
-                                    </v-btn>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-                    </v-form>
+                    <v-list subheader>
+                        <v-subheader>Recent following</v-subheader>
+
+                        <v-list-item
+                                v-for="item in items"
+                                :key="item.title"
+
+                        >
+                            <v-list-item-avatar>
+                                <v-img :src="item.avatar"/>
+                            </v-list-item-avatar>
+
+                            <v-list-item-content>
+                                <v-list-item-title v-text="item.title"/>
+                            </v-list-item-content>
+
+                            <v-list-item-icon>
+                                <v-icon :color="item.active ? 'green accent-4' : 'grey'"  @click="items">mdi-thumb-up</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-icon>
+                                <v-icon :color="item.active ? 'red accent-4' : 'grey'"  @click="items">mdi-thumb-down</v-icon>
+                            </v-list-item-icon>
+                        </v-list-item>
+                    </v-list>
                 </material-card>
             </v-flex>
         </v-layout>
@@ -136,7 +56,40 @@
 </template>
 
 <script>
+    import API_ENDPOINT_SECURE from "../../api/GetSecureEndPoint";
+
     export default {
-        //
+        data: () => ({
+            status: true,
+            userInfo: {
+               name: '',
+               email: '',
+               following: []
+            },
+            items: [
+                { active: true, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
+                { active: false, title: 'Ranee Carlson', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
+                { active: false, title: 'Cindy Baker', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
+                { active: false, title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
+            ],
+            items2: [
+                { title: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg' },
+            ],
+        }),
+        inject: ['myCookie', 'myUserSession'],
+        async created(){
+            try {
+                const userName = localStorage.getItem('currentUser');
+                const userCookie = this.myCookie.get(userName);
+                await this.myUserSession.getTokenInfo(API_ENDPOINT_SECURE, userCookie).then(data => {
+                    this.userInfo.name = data.name;
+                    this.userInfo.email = data.email;
+                    this.userInfo.following = data.following;
+                    //alert(data.name)
+                });
+            }catch(err){
+                alert(err)
+            }
+        }
     }
 </script>

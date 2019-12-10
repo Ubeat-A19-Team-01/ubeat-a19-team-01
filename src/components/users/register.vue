@@ -14,6 +14,9 @@
                         sm="8"
                         md="4"
                     >
+                        <v-alert type="error" v-if="loginError === true" class="mb-3">
+                            Those fields cannot be empty. Please fill out.
+                        </v-alert>
                         <v-card class="elevation-12">
                             <v-toolbar
                                 color="primary"
@@ -69,23 +72,27 @@
         props: {
             source: String,
         },
-        inject: ['myUsers'],
+        inject: ['myUsers', 'eventBus'],
         data: () => ({
             userRegistration: {
                 name: '',
                 email: '',
                 password: ''
             },
-            name: ''
+            name: '',
+            loginError: false,
         }),
         methods: {
             registerUser() {
                 try {
                     if(this.userRegistration.name ==='' || this.userRegistration.email === '' || this.userRegistration.password === ''){
+                        this.loginError = true;
+                        setTimeout(() =>{ this.loginError = false}, 3000);
                         this.$router.push('/register')
                     } else {
                         const {name} = this.myUsers.signupUsers(API_ENDPOINT_SECURE, this.userRegistration);
                         this.name = name;
+                        this.eventBus.$emit('getUserName', localStorage.getItem('currentUser'));
                         this.$router.push('/')
                     }
                 } catch(err){

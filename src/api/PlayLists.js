@@ -1,8 +1,11 @@
 class PlayLists{
 
-    getPlaylists = async (url) => {
+    getPlaylists = async (url, token) => {
         const response = await fetch(url + 'playlists', {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
         });
         const json = await response.json();
         return {
@@ -11,9 +14,12 @@ class PlayLists{
         }
     };
 
-    getPlaylistsById = async(url, id) => {
+    getPlaylistsById = async(url, id, token) => {
         const response = await fetch(url + `playlists/${id}`, {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
         });
         const json = await response.json();
         return {
@@ -22,11 +28,12 @@ class PlayLists{
         }
     };
 
-    createPlaylists = async(url, name) => {
+    createPlaylists = async(url, name, token) => {
         const response = await fetch(url + 'playlists', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': token
             },
             body: JSON.stringify({
                name: name.name,
@@ -39,11 +46,12 @@ class PlayLists{
         }
     };
 
-    modifyPlaylistsById = async(url, id, name) => {
+    modifyPlaylistsById = async(url, id, name, token) => {
         const response = await fetch(url + `playlists/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': token
             },
             body: JSON.stringify({
                 name: name
@@ -56,9 +64,12 @@ class PlayLists{
         }
     };
 
-    deletePlaylistsById = async(id) => {
+    deletePlaylistsById = async(id, token) => {
         const response = await fetch(`https://ubeat.herokuapp.com/unsecure/playlists/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': token
+            }
         });
         const json = await response.json();
         return {
@@ -67,20 +78,24 @@ class PlayLists{
         }
     };
 
-    addPlaylistsTracksById = async(url, id, track) => {
+    addPlaylistsTracksById = async(url, id, track, token) => {
         const response = await fetch(url + `playlists/${id}/tracks`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': token
             },
             body: JSON.stringify(track)
         });
         return await response.json();
     };
 
-    deletePlaylistsByIdAndTrackId = async(id, trackId) => {
+    deletePlaylistsByIdAndTrackId = async(id, trackId, token) => {
         const response = await fetch(`https://ubeat.herokuapp.com/unsecure/playlists/${id}/tracks/${trackId}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': token
+            }
         });
         return await response.json();
     }
