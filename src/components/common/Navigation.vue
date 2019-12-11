@@ -20,15 +20,25 @@
                 </v-list-item>
             </v-list>
             <v-spacer/>
-            <v-text-field
-                flat
-                solo-inverted
-                hide-details             
-                label="Select item to search about"
-                class="hidden-xs-and-down hidden-xs-only mt-3"
-                v-model="ItemToSearch"
+
+            <v-autocomplete
+               :loading="loading"
+               :items="itemFound"
+               :search-input.sync="search"
+               v-model="select"
+               cache-items              
+               class="hidden-xs-and-down hidden-xs-only mt-3"
+               flat
+               hide-no-data
+               hide-details
+              label="Select item to search about"
+              solo-inverted  
+              item-text="name"         
+              item-value="name"
+               @change="Onselect"
+               @keypress="Onselect"
             >
-            <template slot="prepend">
+       <template slot="prepend">
              <v-select :items="items"
                 placeholder="open to select"
                  item-text="name"
@@ -40,12 +50,8 @@
 
               </v-select>
                </template>
-           <template slot="append" v-if="ItemToSearch!==''">
-           <v-btn flat hide-details solo-inverted :to="routePath"  color="blue darken-3" >
-             <v-icon >search</v-icon>
-           </v-btn>
-           </template> 
-            </v-text-field>
+    
+      </v-autocomplete>    
             <v-spacer/>
             <v-menu open-on-click bottom offset-y>
                 <template v-slot:activator="{ on }">
@@ -147,17 +153,23 @@
 </template>
 
 <script>
-
+   import API_ENDPOINT_SECURE  from "../../api/GetSecureEndPoint";
+   import _ from 'underscore'; 
     export default {
         name: 'Navigation',
         props: ['logoutUser', 'callUnsetCookie'],
-        inject: ['myCookie', 'myUsers', 'myUserSession'],
+        inject: ['myCookie', 'myUsers', 'myUserSession','mySearch'],
         data() {
             return {
                 drawer: false,
-                 SelectedItem:[],
-                 ItemToSearch:'' , 
-                 items:['Alls','albums','artists','tracks','users'],
+                 SelectedItem:[],               
+                 items:['Alls','albums','artists','tracks','users'],                
+                 loading: false,
+                 search: null,
+                 select: null,
+                 itemFound:[] ,                
+                 currentUser :localStorage.getItem('currentUser') , 
+                 
             };
         },
 
@@ -169,36 +181,70 @@
                 switch(this.SelectedItem) {
                  case "Alls":
                 
-                 routePath = '/search/'+this.ItemToSearch ; 
+                 routePath = '/search/'+this.select ; 
                  break;
                  case "albums":
-                 routePath  = '/search/albums/'+this.ItemToSearch ;    
+                 routePath  = '/search/albums/'+this.select ;    
                 
                  break;
                  case "artists":
-                 routePath = '/search/artists/'+this.ItemToSearch ;  
+                 routePath = '/search/artists/'+this.select;  
                 
                  break;
                  case "tracks":
-                    routePath = '/search/tracks/'+this.ItemToSearch;
+                    routePath = '/search/tracks/'+this.select;
                 
                  break;
                  case "users":
-                routePath ='/search/users/'+this.ItemToSearch ; 
+                routePath ='/search/users/'+this.select ; 
                 
                  break;
                  default:
-                routePath  = '/search/'+this.ItemToSearch  ; 
+                routePath  = '/search/'+this.select ; 
                 
                 }
                 return  routePath ;               
 
-            }
+            } ,
+           
+
           
         }
         ,
+       watch: {
+      search (val) {
+        let token = this.myCookie.get(this.currentUser) ;               
+        let searchQuery; 
+   
+              this.loading = true ;      
+              
+                if(this.SelectedItem=='Alls')
+              {
+                 searchQuery= `search?q=${val}` ;
+              }
+              else 
+              {
+              searchQuery= `search/${this.SelectedItem}?q=${val}` ; 
+              }  
+         
+              this.mySearch.Search(API_ENDPOINT_SECURE,searchQuery,token).then(
+                  response =>{                       
 
+                         this.itemFound =this.dataResult(response) ;
+                         this.loading=false ; 
+
+                  }) 
+                         
+
+      }
+    },
         methods:{
+            Onselect()
+            {
+                this.$router.push(this.routePath) ; 
+            }  
+             ,
+
             navigateToPlaylists(){
                 this.$router.push('/playlists')
             },
@@ -207,60 +253,52 @@
             },
             goToUserProfile(){
                 this.$router.push('/userProfile');
-            },
-            // Search(){
-                
-            //        let token = this.myCookie.get(this.currentUser) ; 
-     
-            //   this.mySearch.Search(API_ENDPOINT,this.SelectedItem,this.ItemToSearch,token).then(
-            //       response =>{
-            //             //this.searchResult = response ; 
-            //             localStorage.setItem('searchResult',JSON.stringify(response));
+            },       
+      
+         dataResult : function(d)
+            {
+                let Tracks=[] ; 
+               let Albums=[]  ; 
+               let Artists=[]; 
+               let Users=[] ; 
+               let res =[] ; 
 
-            //       }) ; 
+              
+            Tracks  = _.where(d.results,{wrapperType:"track"})  ;                                   
+            Albums = _.where(d.results,{wrapperType:"collection"}) ;                     
+            Artists = _.where(d.results,{wrapperType:"artist"}) ; 
+            Users = _.where(d.results,{wrapperType:"user"}) ; 
+ 
+                        
+            Albums.forEach(album => {
+              res.push({name:album.collectionName,id:album.collectionId}) ;    
+                
+            });
 
-            
-            //  this.$router.push('/search') ; 
+            Tracks.forEach( trak =>
+            {
+                res.push({name:trak.trackName,id:trak.trackId}) ; 
+            }
 
-           // },
-             
-  
-        //    navigateToSearchs()
-        //    {
+            ) ;
 
-        //          let routePath  ;   
-        //           localStorage.setItem('searchtype',this.SelectedItem)
-        //         switch(this.SelectedItem) {
-        //          case "Alls":
-                
-        //          routePath = '/search/'+this.ItemToSearch ; 
-        //          break;
-        //          case "albums":
-        //          routePath  = '/search/albums/'+this.ItemToSearch ;    
-                
-        //          break;
-        //          case "artists":
-        //          routePath = '/search/artists/'+this.ItemToSearch ;  
-                
-        //          break;
-        //          case "tracks":
-        //             routePath = '/search/tracks/'+this.ItemToSearch;
-                
-        //          break;
-        //          case "users":
-        //         routePath ='/search/users/'+this.ItemToSearch ; 
-                
-        //          break;
-        //          default:
-        //         routePath  = '/search/'+this.ItemToSearch  ; 
-                
-        //         }
-        //         //return  routePath ; 
-        //           this.$router.push(routePath) ;            
+            Artists.forEach( artist =>
+            {
+                res.push({name:artist.artistName,id:artist.artistId}) ; 
+            }
 
+            ) ;
+              
+           Users.forEach( user=>{
+             res.push({name:user.name,id:user.id}) ; 
+           }
+               
+           )  
+      
+         return res ; 
 
-        //     }
-           
+            }
+
 
                
             }
