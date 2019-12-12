@@ -45,19 +45,31 @@
 </template>
 
 <script>
-    import API_ENDPOINT from "../../api/GetEndPoint.js";  
+    import API_ENDPOINT_SECURE from '../../api/GetSecureEndPoint' ; 
     export default {
         props:['id','color','icon'],
         name: "cardArtist" ,
-        inject:['myArtists'] ,
+        inject:['myArtists','myCookie'] ,
         data(){
             return{
             Artist:{artistName:'',primaryGenreName:''},
+             currentUser : localStorage.getItem('currentUser') , 
             avatar:'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light'
             }
         },
+        computed: {
+            
+             token()
+         {
+            return this.myCookie.get(this.currentUser) ; 
+          }
+
+        },
+        
+    
+
        async created() {
-           const {result} =await this.myArtists.getArtistsById(API_ENDPOINT,this.id) ; 
+           const {result} =await this.myArtists.getArtistsById(API_ENDPOINT_SECURE,this.id,this.token) ; 
            const dataArtiste = result ; 
            this.Artist={artistName:dataArtiste[0].artistName,primaryGenreName:dataArtiste[0].primaryGenreName};
         },

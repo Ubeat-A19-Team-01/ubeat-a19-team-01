@@ -99,6 +99,7 @@
                                 this.myCookie.set(data.name, data.token);
                                 // this.$currentUser=data.name ;
                                 localStorage.setItem('currentUser', data.name) ;
+                                localStorage.setItem('currentemail', data.email) ;
                                 this.userInfo.name = data.name;
                                 this.checkCookie(data.name);
                                 this.$router.push('/dashboard')

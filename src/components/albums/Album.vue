@@ -44,14 +44,15 @@
 
 <script>
 import AlbumTracks from '../albums/AlbumTracks.vue';
-import API_ENDPOINT from "../../api/GetEndPoint.js";
+import API_ENDPOINT_SECURE from '../../api/GetSecureEndPoint' ; 
 export default {
     components:{AlbumTracks},
-    inject: ['myAlbums'] ,       
+    inject: ['myAlbums','myCookie'] ,       
   data() {
     return {
       routeArtist : '' ,   
       AlbumId:this.$route.params.id , 
+      currentUser : localStorage.getItem('currentUser') , 
       albumData: {
       }
     };
@@ -60,7 +61,11 @@ export default {
       getArtistRoute()
       {
        return '/artist/'+this.albumData.artistId
-      }
+      },
+      token()
+    {
+      return this.myCookie.get(this.currentUser) ; 
+    }
   },
    methods: {    
     convertDate(inputFormat) {
@@ -69,8 +74,10 @@ export default {
   return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('-')
 }
   },
+
+ 
   created() {
-        this.myAlbums.getAlbumsById(API_ENDPOINT,this.AlbumId).then(
+        this.myAlbums.getAlbumsById(API_ENDPOINT_SECURE,this.AlbumId,this.token).then(
     response => {
         let dataAlbum=response ;
         if(dataAlbum.resultCount!==0)                  {

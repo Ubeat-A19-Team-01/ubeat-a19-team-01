@@ -1,8 +1,9 @@
 class Artists {
 
-    getArtistsById = async(url, id) => {
+    getArtistsById = async(url, id,token) => {
         const response = await fetch(url + `artists/${id}`, {
-            method: 'GET'
+            method: 'GET' ,
+            headers:{"Authorization":token}
         });
         const json = await response.json() ;
         return {
@@ -10,9 +11,10 @@ class Artists {
          }
     };
 
-    getAlbumsByArtistsId = async(url, id) => {
+    getAlbumsByArtistsId = async(url, id,token) => {
         const response = await fetch(url + `artists/${id}/albums`, {
-            method: 'GET'
+            method: 'GET',
+            headers:{"Authorization":token}
         });
         const json = await response.json();
         return {

@@ -9,7 +9,8 @@
             <v-card-title >{{item.collectionName}}</v-card-title>
             <v-card-subtitle>{{item.primaryGenreName +"/"+ item.country + " - " + item.artistName }}</v-card-subtitle>
              <v-card-actions>
-               <v-icon @click="OnAlbumClick(item.collectionId)" >mdi-library-music</v-icon>               
+               <v-icon @click="OnAlbumClick(item.collectionId)" >mdi-library-music</v-icon>  
+                <PlaylistDialog  :albumId="item.collectionId"   :add="'album'"/>             
             </v-card-actions>
           </v-card> 
                 </v-col>
@@ -34,6 +35,7 @@
 
             <v-card-actions>
              <v-icon> mdi-music</v-icon>
+             <PlaylistDialog  :trackIt="item" :add="'track'"/>
               
             </v-card-actions>
           </v-card>
@@ -63,8 +65,10 @@
 </template>
 <script>
 import _ from 'underscore';
+import PlaylistDialog from '../common/PlaylistDialog'
 export default {
     props:['searchResult'] ,
+    components:{PlaylistDialog}  , 
    
     
     computed:{

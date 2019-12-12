@@ -66,18 +66,18 @@
  </v-data-table>
 </template>
 <script>
-import API_ENDPOINT from "../../api/GetEndPoint.js";
+import API_ENDPOINT_SECURE from '../../api/GetSecureEndPoint' ; 
 import  Player from '../common/Player';
 export default {
      props:['AlbumId'],
-     inject: ['myPlaylists','myAlbums'],      
+     inject: ['myPlaylists','myAlbums','myCookie'],      
       data() {
     return {
       singleSelect: false,       
        alert :false ,   
        messageInfo:{color:'' ,text:''} ,            
        selected: [],
-       dialog: false,
+       dialog: false,      
        trackItem: {              
       },
       dataItemsSelect:[],
@@ -98,9 +98,9 @@ export default {
       trackList: [
       ],
        users: {
-              name: "a19-team28",
-              email: "a19-team28@team28.com",
-              password: "19Team28"
+               name: localStorage.getItem('currentUser') , 
+              email: localStorage.getItem('currentemail')   
+              //password: "19Team28"
             }
       };
   },
@@ -169,7 +169,7 @@ export default {
                 contentAdvisoryRating: track.contentAdvisoryRating,
                 radioStationUrl: ''
             };
-            this.myPlaylists.addPlaylistsTracksById(API_ENDPOINT, this.playlistSelect, trackItem);
+            this.myPlaylists.addPlaylistsTracksById(API_ENDPOINT_SECURE, this.playlistSelect, trackItem,this.token);
             this.alert=true ;             
              this.messageInfo.color="success" ; 
              this.messageInfo.text="Track(s) has been added "
@@ -184,8 +184,16 @@ export default {
        }
       },
   },
+  computed:{
+    token()
+    {
+      return this.myCookie.get(this.users.name) ; 
+    }
+  }
+  ,
   async  created() {
-         this.myAlbums.getTracksByAlbumsById(API_ENDPOINT,this.AlbumId).then(
+         
+         this.myAlbums.getTracksByAlbumsById(API_ENDPOINT_SECURE,this.AlbumId,this.token).then(
         response =>{
              let datatrack=response ; 
              if(datatrack.resultCount>0) 
@@ -194,7 +202,7 @@ export default {
              }
         });
 
-     const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT);
+     const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT_SECURE,this.token);
         this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
         this.tracks = tracks;
         

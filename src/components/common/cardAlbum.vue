@@ -29,19 +29,26 @@
 <script>
     import API_ENDPOINT from "../../api/GetEndPoint.js";
     export default {
-        inject:['myAlbums'],
+        inject:['myAlbums','myCookie'],
         props:['id','color'] , 
         name: "cardAlbum",
         data()
         {
           return {
               Album:{
-              }
+              },
+              currentUser:localStorage.getItem('currentUser') 
           }
+        },
+        computed: {
+        token()
+    {
+      return this.myCookie.get(this.currentUser) ; 
+    }
         },
        created()
        {
-        this.myAlbums. getAlbumsById(API_ENDPOINT,this.id).then(
+        this.myAlbums. getAlbumsById(API_ENDPOINT,this.id,this.token).then(
             response=>{                 
             let dataAlbum=response ; 
                if(dataAlbum.resultCount!==0)                  {
