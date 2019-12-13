@@ -73,6 +73,27 @@ class Users {
             following: json.following
         }
     };
+
+    flowUser = async(url,token,id) =>{
+        const response = await fetch(url + 'follow', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                headers: {
+                    'Authorization': token
+                }
+
+            },
+            body: JSON.stringify({
+                id: id                
+            })
+        });
+        return await response.json() ;
+
+    } ; 
+      
+
+
 }
 
 export default Users;

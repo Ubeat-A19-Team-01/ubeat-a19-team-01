@@ -1,6 +1,6 @@
 <template>
 <div>
- <GlobalSearch :searchResult="searchResult" v-if="searchtype=='Alls'" />
+ <GlobalSearch :searchResult="searchResult" :searchResultUsers="searchResultUsers" v-if="searchtype=='Alls'" />
  <SpecificSearch :searchResult="searchResult" v-if="searchtype!='Alls'" /> 
 </div>
 </template>
@@ -15,7 +15,8 @@ export default {
             return {                              
                   currentUser :localStorage.getItem('currentUser') , 
                   searchtype :localStorage.getItem('searchtype'),                
-                  searchResult :[] ,              
+                  searchResult :[] , 
+                  searchResultUsers :[] ,              
                  
             };
         } 
@@ -39,17 +40,34 @@ this.Search() ;
                 if(this.searchtype=='Alls')
               {
                  searchQuery= `search?q=${this.$route.params.name}` ;
+                 this.mySearch.Search(API_ENDPOINT,searchQuery,token).then(
+                  response =>{
+                        this.searchResult = response ; 
+
+                  }) 
+
+                   searchQuery= `search/users?q=${this.$route.params.name}` ;
+                 this.mySearch.Search(API_ENDPOINT,searchQuery,token).then(
+                  response =>{
+                        this.searchResultUsers = response ; 
+
+                  }) 
+                 
+
+
+
               }
               else 
               {
               searchQuery= `search/${this.searchtype}?q=${this.$route.params.name}` ; 
-              }  
-         
               this.mySearch.Search(API_ENDPOINT,searchQuery,token).then(
                   response =>{
                         this.searchResult = response ; 
 
                   }) 
+              }  
+         
+              
 
         }
 

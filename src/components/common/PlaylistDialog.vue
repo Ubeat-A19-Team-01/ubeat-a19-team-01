@@ -41,12 +41,19 @@ export default {
             }
       }
     },
+    computed: {
+        token()
+    {
+      return this.myCookie.get(this.users.name) ; 
+    }
+    },
+    
      async  created() {
-         let token = this.myCookie.get(this.users.name) ; 
+       
 
          if(this.albumId!=undefined)
          {
-         this.myAlbums.getTracksByAlbumsById(API_ENDPOINT_SECURE,this.albumId,token).then(
+         this.myAlbums.getTracksByAlbumsById(API_ENDPOINT_SECURE,this.albumId,this.token).then(
         response =>{
              let datatrack=response ; 
              if(datatrack.resultCount>0) 
@@ -55,11 +62,8 @@ export default {
              }
         });
         }
-
-       
-
-
-     const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT_SECURE,token);
+    
+     const {playlistsT, tracks} = await this.myPlaylists.getPlaylists(API_ENDPOINT_SECURE,this.token);
         this.playlists = playlistsT.filter(({owner}) => this.users.email === owner.email);
         this.tracks = tracks;
         
@@ -70,20 +74,13 @@ export default {
        })
   } , 
   methods: {
-    AddToPlayList()
-      {
-           
-      if(this.add=='album') 
-      {
-        try
-        {
-        this.trackList.forEach(track=>
-          {
+   createTrackObjet(playlistId,track) 
+   {
 
-          const trackItem =   {
-                playlistId: this.playlistSelect,
+    const trackItem =   {
+                playlistId: playlistId,
                 wrapperType: track.wrapperType,
-                artistId: track.id,
+                artistId: track.artistId,
                 kind: track.kind,
                 collectionId: track.collectionId,
                 trackId: track.trackId,
@@ -114,8 +111,22 @@ export default {
                 primaryGenreName: track.primaryGenreName,
                 contentAdvisoryRating: track.contentAdvisoryRating,
                 radioStationUrl: ''
-            };
-            this.myPlaylists.addPlaylistsTracksById(API_ENDPOINT_SECURE, this.playlistSelect, trackItem,this.token);
+    } 
+       
+    return trackItem ;
+   }
+ , 
+    AddToPlayList()
+      {
+           
+      if(this.add=='album') 
+      {
+        try
+        {
+        this.trackList.forEach(track=>
+          {
+       
+            this.myPlaylists.addPlaylistsTracksById(API_ENDPOINT_SECURE, this.playlistSelect, this.createTrackObjet(this.playlistSelect,track),this.token);
            
          }  
        ) ; 
@@ -128,42 +139,8 @@ export default {
        }
        else 
        {         
-        const trackItem =   {
-                playlistId: this.playlistSelect,
-                wrapperType: this.trackIt.wrapperType,
-                artistId: this.trackIt.artistId,
-                kind: this.trackIt.kind,
-                collectionId: this.trackIt.collectionId,
-                trackId: this.trackIt.trackId,
-                artistName: this.trackIt.artistName,
-                collectionName:this.trackIt.collectionName,
-                trackName:this.trackIt.trackName ,
-                collectionCensoredName: this.trackIt.collectionCensoredName,
-                trackCensoredName: this.trackIt.trackCensoredName,
-                artistViewUrl: this.trackIt.artistViewUrl,
-                collectionViewUrl:this.trackIt.collectionViewUrl ,
-                trackViewUrl:this.trackIt.trackViewUrl,
-                previewUrl: this.trackIt.previewUrl,
-                artworkUrl30: this.trackIt.artworkUrl30,
-                artworkUrl60:this.trackIt. artworkUrl60,
-                artworkUrl100: this.trackIt.artworkUrl100,
-                collectionPrice:this.trackIt.collectionPrice,
-                trackPrice:this.trackIt.trackPrice,
-                releaseDate: this.trackIt.releaseDate,
-                collectionExplicitness: this.trackIt.collectionExplicitness,
-                trackExplicitness: this.trackIt.trackExplicitness,
-                discCount: this.trackIt.discCount,
-                discNumber: this.trackIt.discCount,
-                trackCount: this.trackIt.trackCount,
-                trackNumber: this.trackIt.trackNumber,
-                trackTimeMillis:this.trackIt.trackTimeMillis,
-                country: this.trackIt.country,
-                currency: this.trackIt.currency,
-                primaryGenreName: this.trackIt.primaryGenreName,
-                contentAdvisoryRating: this.trackIt.contentAdvisoryRating,
-                radioStationUrl: ''
-            };
-            this.myPlaylists.addPlaylistsTracksById(API_ENDPOINT_SECURE, this.playlistSelect, trackItem,this.token);
+    
+            this.myPlaylists.addPlaylistsTracksById(API_ENDPOINT_SECURE, this.playlistSelect,this.createTrackObjet(this.playlistSelect,this.trackIt),this.token);
 
        }    
 

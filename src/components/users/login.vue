@@ -100,6 +100,8 @@
                                 // this.$currentUser=data.name ;
                                 localStorage.setItem('currentUser', data.name) ;
                                 localStorage.setItem('currentemail', data.email) ;
+                                localStorage.setItem('currentUserId', data.id) ;
+
                                 this.userInfo.name = data.name;
                                 this.checkCookie(data.name);
                                 this.$router.push('/dashboard')

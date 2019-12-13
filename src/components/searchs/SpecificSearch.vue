@@ -27,8 +27,21 @@
           </v-card>
                 </v-col>
             </v-row>     
+        
+         <v-row>
+                <v-col cols="12" sm="6" md="3" v-for="item in Results.Users" :key="item.id">
+                    <v-card    color="#385F73" dark >           
+            <v-card-title >{{item.name}}</v-card-title>
 
+            <v-card-subtitle>{{item.email}}</v-card-subtitle>
 
+            <v-card-actions>
+               <v-icon>mdi-account</v-icon> 
+              
+            </v-card-actions>
+          </v-card>
+                </v-col>
+            </v-row>    
            
         </v-container>
     </div>
@@ -39,6 +52,13 @@
   import cardAlbum from "../common/cardAlbum";
 export default {
     props:['searchResult'] ,
+    data(){
+        return{
+            searchtype :localStorage.getItem('searchtype'),
+           
+        } 
+    }
+ , 
     components:{
             appCardAlbum: cardAlbum,
             appCardArtist: cardArtist
@@ -52,7 +72,12 @@ export default {
            const Tracks  = _.where(obj.results,{wrapperType:"track"}); 
            const Albums = _.where(obj.results,{wrapperType:"collection"})
            const Artists = _.where(obj.results,{wrapperType:"artist"}) ;
-           const Users = _.where(obj.results,{wrapperType:"user"}) ; 
+           let  Users=[] ; 
+           
+           if(this.searchtype=='users'){
+              Users = obj ; 
+           }
+           
   
         return {Tracks:Tracks,Albums:Albums,Artists:Artists,Users:Users}; 
             

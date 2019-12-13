@@ -51,6 +51,7 @@
 
             <v-card-actions>
              <v-icon> mdi-account</v-icon>
+             <v-btn class="ma-2" outlined color="indigo" @click="OnFlowmeClick(item.id)" >follow me</v-btn>
               
             </v-card-actions>
           </v-card>
@@ -66,10 +67,16 @@
 <script>
 import _ from 'underscore';
 import PlaylistDialog from '../common/PlaylistDialog'
+import API_ENDPOINT_SECURE from '../../api/GetSecureEndPoint' ; 
 export default {
-    props:['searchResult'] ,
+    inject:['myUsers','myCookie'] ,    
+    props:['searchResult','searchResultUsers'] ,
     components:{PlaylistDialog}  , 
-   
+    data(){
+      return {
+         currentUser: localStorage.getItem('currentUser') 
+      }
+    } , 
     
     computed:{
 
@@ -78,11 +85,15 @@ export default {
            const Tracks  = _.where(obj.results,{wrapperType:"track"}); 
            const Albums = _.where(obj.results,{wrapperType:"collection"})
            const Artists = _.where(obj.results,{wrapperType:"artist"}) ;
-           const Users = _.where(obj.results,{wrapperType:"user"}) ; 
+           const Users = this.searchResultUsers; 
   
         return {Tracks:Tracks,Albums:Albums,Artists:Artists,Users:Users}; 
             
-       }
+       } , 
+         token()
+    {
+      return this.myCookie.get(this.currentUser) ; 
+    }
 
     },
     methods: {
@@ -94,7 +105,23 @@ export default {
       {
         this.$router.push('/artist/'+ArtistId)  ;
 
+      },      
+      OnFlowmeClick(id)   
+      {
+        try
+        {
+          this.myUsers.flowUser(API_ENDPOINT_SECURE,this.token,id) ; 
+
+        }
+        catch(err)
+        {
+         alert(err)
+        }
       }
+    
+
+
+
 
     },
 

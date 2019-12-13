@@ -169,6 +169,8 @@
                  select: null,
                  itemFound:[] ,                
                  currentUser :localStorage.getItem('currentUser') , 
+                // CurrentUserId:localStorage.setItem('currentUserId', data.id) , 
+                 resultUsers:[]  
                  
             };
         },
@@ -214,26 +216,45 @@
        watch: {
       search (val) {
         let token = this.myCookie.get(this.currentUser) ;               
-        let searchQuery; 
+        //let searchQuery; 
    
               this.loading = true ;      
               
-                if(this.SelectedItem=='Alls')
-              {
-                 searchQuery= `search?q=${val}` ;
-              }
-              else 
-              {
-              searchQuery= `search/${this.SelectedItem}?q=${val}` ; 
-              }  
+            //     if(this.SelectedItem=='Alls')
+            //   {
+            //      searchQuery= `search?q=${val}` ;
+            //   }
+            //   else 
+            //   {
+            //   searchQuery= `search/${this.SelectedItem}?q=${val}` ; 
+            //   }  
          
-              this.mySearch.Search(API_ENDPOINT_SECURE,searchQuery,token).then(
+              this.mySearch.Search(API_ENDPOINT_SECURE,`search?q=${val}`,token).then(
                   response =>{                       
 
                          this.itemFound =this.dataResult(response) ;
+                        // this.loading=false ; 
+
+                  }) 
+
+             this.mySearch.Search(API_ENDPOINT_SECURE,`search/users?q=${val}`,token).then(
+                  response =>{                       
+
+
+                         this.resultUsers   = response ; 
+                         let  result =[] ; 
+
+                         this.resultUsers.forEach( user=>{
+                         result.push({name:user.name,id:user.id}) ; 
+                                   }         
+                                 )  
+          
+                         this.itemFound.concat(result) ;
                          this.loading=false ; 
 
                   }) 
+
+                  
                          
 
       }
@@ -260,14 +281,14 @@
                 let Tracks=[] ; 
                let Albums=[]  ; 
                let Artists=[]; 
-               let Users=[] ; 
+              // let Users=[] ; 
                let res =[] ; 
 
               
             Tracks  = _.where(d.results,{wrapperType:"track"})  ;                                   
             Albums = _.where(d.results,{wrapperType:"collection"}) ;                     
             Artists = _.where(d.results,{wrapperType:"artist"}) ; 
-            Users = _.where(d.results,{wrapperType:"user"}) ; 
+            //Users = d; 
  
                         
             Albums.forEach(album => {
@@ -289,11 +310,11 @@
 
             ) ;
               
-           Users.forEach( user=>{
-             res.push({name:user.name,id:user.id}) ; 
-           }
+        //    Users.forEach( user=>{
+        //      res.push({name:user.name,id:user.id}) ; 
+        //    }
                
-           )  
+         //  )  //
       
          return res ; 
 
