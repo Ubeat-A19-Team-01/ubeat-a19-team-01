@@ -90,7 +90,7 @@ export default {
         return {Tracks:Tracks,Albums:Albums,Artists:Artists,Users:Users}; 
             
        } , 
-         token()
+      token()
     {
       return this.myCookie.get(this.currentUser) ; 
     }
