@@ -89,7 +89,18 @@ class Users {
 
     } ; 
       
+    unfollowUser=async(url,token,id) => {
+        const response = await fetch(url + 'follow/'+id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                 'Authorization': token
+            }
+          
+        });
+        return await response.json() ;
 
+    } ; 
 
 }
 

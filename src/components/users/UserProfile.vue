@@ -43,7 +43,7 @@
                                 <v-list-item-title v-text="item.email"/>
                             </v-list-item-content>
                             <v-list-item-icon>
-                                <v-icon :color="item.active ? 'red accent-4' : 'grey'"  @click="items">mdi-thumb-down</v-icon>
+                                <v-icon  @click="OnUnfollow(item.id)">mdi-thumb-down</v-icon>
                             </v-list-item-icon>
                         </v-list-item>
                     </v-list>
@@ -77,6 +77,23 @@
             ],
         }),
         inject: ['myCookie', 'myUserSession', 'myUsers'],
+        methods: {
+          async  OnUnfollow(id)
+            {
+                try{
+                      const userName = localStorage.getItem('currentUser');
+                     this.userCookie = this.myCookie.get(userName);
+                      await this.myUsers.unfollowUser(API_ENDPOINT_SECURE,this.userCookie,id) ; 
+                       
+                    
+
+                }catch(err)
+                {
+                    alert(err) ; 
+                }
+
+            }
+        },
         async created(){
             try {
                 const userName = localStorage.getItem('currentUser');
