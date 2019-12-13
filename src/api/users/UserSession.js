@@ -12,7 +12,8 @@ class UserSession {
             id: json.id,
             name: json.name,
             token: json.token,
-            email: json.email
+            email: json.email,
+            followings:json.following
         }
     };
 }

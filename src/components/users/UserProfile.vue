@@ -48,7 +48,7 @@
                                 <v-icon :color="item.active ? 'red accent-4' : 'grey'"  @click="items">mdi-thumb-down</v-icon>
                             </v-list-item-icon>
                         </v-list-item>
-                        {{myFollowings}} {{userInfo.id}} {{userCookie}}
+                        {{myFollowings}} 
                     </v-list>
                 </material-card>
             </v-flex>
@@ -88,12 +88,13 @@
                     this.userInfo.name = data.name;
                     this.userInfo.email = data.email;
                     this.userInfo.id = data.id;
+                    this.myFollowings = data.followings ;
                 });
 
-                this.myUsers.getUser(API_ENDPOINT_SECURE, this.userInfo.id, this.userCookie).then(data => {
-                     data.following.map((eachElement) => this.myFollowings.push(eachElement));
-                    //alert(data)
-                });
+                // this.myUsers.getUser(API_ENDPOINT_SECURE, this.userInfo.id, this.userCookie).then(data => {
+                //      data.following.map((eachElement) => this.myFollowings.push(eachElement));
+                //     //alert(data)
+                // });
             }catch(err){
                 alert(err)
             }
