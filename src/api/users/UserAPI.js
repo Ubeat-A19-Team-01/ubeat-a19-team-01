@@ -43,19 +43,19 @@ class Users {
         return await response.json();
     };
 
-    getUsers = async(url, token) => {
-        const response = await fetch(url + `users`, {
+    getUser = async(url, id, token) => {
+        const response = await fetch(`url/users/${id}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': `Token ${token}`
+                'Authorization': token
             },
         });
         const json = await response.json();
         return {
             id: json.id,
             name: json.name,
-            email: json.email
+            email: json.email,
+            following: json.following
         }
     };
     getConnectedUser = async (url,token) => {

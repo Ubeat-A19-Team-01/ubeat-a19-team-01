@@ -84,16 +84,7 @@
                         this.loginError = true;
                         setTimeout(() =>{ this.loginError = false}, 3000);
                         this.$router.push('/');
-                    } else if(this.userLogin.email !== '' && this.userLogin.password === ''){
-                        const userName = localStorage.getItem('currentUser');
-                        if(userName){
-                            this.checkCookie(userName);
-                            alert(userName)
-                        } else {
-                            this.loginError = true;
-                            setTimeout(() =>{this.loginError = false}, 3000);
-                        }
-                    } else {
+                    } else if(this.userLogin.email !== '' && this.userLogin.password !== ''){
                         this.myUsers.loginUsers(API_ENDPOINT_SECURE, this.userLogin).then(data => {
                             if(this.userLogin.email === data.email){
                                 this.myCookie.set(data.name, data.token);
@@ -105,8 +96,19 @@
                                 this.userInfo.name = data.name;
                                 this.checkCookie(data.name);
                                 this.$router.push('/dashboard')
+                            } else {
+                                this.loginError = true;
+                                setTimeout(() =>{this.loginError = false}, 3000);
                             }
                         });
+                        } else {
+                            const userName = localStorage.getItem('currentUser');
+                            if(userName === null){
+                                this.checkCookie(userName);
+                                alert(userName);
+                                this.loginError = true;
+                                setTimeout(() =>{this.loginError = false}, 3000);
+                        }
                     }
                 } catch(err){
                     alert(err)

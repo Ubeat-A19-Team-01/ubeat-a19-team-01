@@ -48,6 +48,7 @@
                                 <v-icon :color="item.active ? 'red accent-4' : 'grey'"  @click="items">mdi-thumb-down</v-icon>
                             </v-list-item-icon>
                         </v-list-item>
+                        {{myFollowings}} {{userInfo.id}} {{userCookie}}
                     </v-list>
                 </material-card>
             </v-flex>
@@ -62,10 +63,12 @@
         data: () => ({
             status: true,
             userInfo: {
+                id: '',
                name: '',
                email: '',
-               following: []
             },
+            myFollowings: [],
+            userCookie: '',
             items: [
                 { active: true, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
                 { active: false, title: 'Ranee Carlson', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
@@ -76,16 +79,20 @@
                 { title: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg' },
             ],
         }),
-        inject: ['myCookie', 'myUserSession'],
+        inject: ['myCookie', 'myUserSession', 'myUsers'],
         async created(){
             try {
                 const userName = localStorage.getItem('currentUser');
-                const userCookie = this.myCookie.get(userName);
-                await this.myUserSession.getTokenInfo(API_ENDPOINT_SECURE, userCookie).then(data => {
+                this.userCookie = this.myCookie.get(userName);
+                await this.myUserSession.getTokenInfo(API_ENDPOINT_SECURE, this.userCookie).then(data => {
                     this.userInfo.name = data.name;
                     this.userInfo.email = data.email;
-                    this.userInfo.following = data.following;
-                    //alert(data.name)
+                    this.userInfo.id = data.id;
+                });
+
+                this.myUsers.getUser(API_ENDPOINT_SECURE, this.userInfo.id, this.userCookie).then(data => {
+                     data.following.map((eachElement) => this.myFollowings.push(eachElement));
+                    //alert(data)
                 });
             }catch(err){
                 alert(err)
