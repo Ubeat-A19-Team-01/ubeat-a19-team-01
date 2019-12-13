@@ -29,26 +29,23 @@
                         <v-subheader>Recent following</v-subheader>
 
                         <v-list-item
-                                v-for="item in items"
-                                :key="item.title"
+                                v-for="item in myFollowings"
+                                :key="item.email"
 
                         >
-                            <v-list-item-avatar>
-                                <v-img :src="item.avatar"/>
-                            </v-list-item-avatar>
-
+                            <v-avatar>
+                                <v-icon size="40">mdi-account-circle</v-icon>
+                            </v-avatar>
                             <v-list-item-content>
-                                <v-list-item-title v-text="item.title"/>
+                                <v-list-item-title v-text="item.name"/>
                             </v-list-item-content>
-
-                            <v-list-item-icon>
-                                <v-icon :color="item.active ? 'green accent-4' : 'grey'"  @click="items">mdi-thumb-up</v-icon>
-                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title v-text="item.email"/>
+                            </v-list-item-content>
                             <v-list-item-icon>
                                 <v-icon :color="item.active ? 'red accent-4' : 'grey'"  @click="items">mdi-thumb-down</v-icon>
                             </v-list-item-icon>
                         </v-list-item>
-                        {{myFollowings}} 
                     </v-list>
                 </material-card>
             </v-flex>
